@@ -1,0 +1,1250 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "選課系統DEMO API",
+        "version": "0.0.1"
+    },
+    "servers": [
+        {
+            "url": "/api",
+            "description": "dev api"
+        }
+    ],
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "登入",
+                "description": "登入",
+                "operationId": "login",
+                "requestBody": {
+                    "description": "Input data format",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "code": {
+                                        "description": "帳號",
+                                        "type": "string",
+                                        "example": "S0000001"
+                                    },
+                                    "password": {
+                                        "description": "密碼",
+                                        "type": "string",
+                                        "example": "password1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "token_type": {
+                                                    "description": "token類型",
+                                                    "type": "string",
+                                                    "example": "Bearer"
+                                                },
+                                                "token": {
+                                                    "description": "token",
+                                                    "type": "string",
+                                                    "example": "3|sDOHhfF2gtzp5zNsXNx9yYmAjNcoOecTB1cr3UWD"
+                                                },
+                                                "name": {
+                                                    "description": "使用者名稱",
+                                                    "type": "string",
+                                                    "example": "開發者帳號"
+                                                },
+                                                "email": {
+                                                    "description": "email帳號",
+                                                    "type": "string",
+                                                    "example": "admin@test.com"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "登出",
+                "description": "登出",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/upload": {
+            "post": {
+                "tags": [
+                    "Upload"
+                ],
+                "summary": "檔案上傳，最高10MB",
+                "description": "可新增jpg/jpeg/gif/png格式的檔案",
+                "operationId": "uploadFile",
+                "requestBody": {
+                    "description": "上傳檔案資訊(預設tmp)",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "properties": {
+                                    "file": {
+                                        "description": "要上傳的檔案 (jpg, jpeg, gif, png)",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "上傳成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "description": "狀態代碼",
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "description": "結果描述",
+                                            "type": "string",
+                                            "example": "檔案上傳成功"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "path": {
+                                                    "description": "檔案儲存路徑",
+                                                    "type": "string",
+                                                    "example": "storage/uploads/xxxxxx.jpg"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "請求資料驗證失敗",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "description": "狀態代碼",
+                                            "type": "integer",
+                                            "example": 422
+                                        },
+                                        "message": {
+                                            "description": "錯誤訊息",
+                                            "type": "string",
+                                            "example": "請求資料驗證失敗"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "file": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "example": [
+                                                        "檔案必須是圖片",
+                                                        "檔案不能大於 10MB"
+                                                    ]
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "取得學生列表",
+                "description": "取得列表（學生教師）",
+                "operationId": "getUsers",
+                "parameters": [
+                    {
+                        "name": "sorting",
+                        "in": "query",
+                        "description": "排序欄位(預設id)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "id"
+                        }
+                    },
+                    {
+                        "name": "direction",
+                        "in": "query",
+                        "description": "排序方向(預設desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "example": "desc"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "頁碼(預設1)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "筆數(預設15)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "15"
+                        }
+                    },
+                    {
+                        "name": "roles",
+                        "in": "query",
+                        "description": "角色",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "student",
+                                    "teacher",
+                                    "staff"
+                                ],
+                                "example": "student"
+                            }
+                        }
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "關鍵字搜尋",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "description": "狀態代碼",
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "description": "結果描述",
+                                            "type": "string",
+                                            "example": "操作成功"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "id",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "created_at": {
+                                                        "description": "建立時間",
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2021-07-07 12:00:00"
+                                                    },
+                                                    "updated_at": {
+                                                        "description": "更新時間",
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2021-07-07 12:00:00"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "$ref": "#/components/schemas/Meta"
+                                        },
+                                        "links": {
+                                            "$ref": "#/components/schemas/Links"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/members": {
+            "post": {
+                "tags": [
+                    "Member"
+                ],
+                "summary": "新增會員",
+                "description": "新增會員",
+                "operationId": "createMember",
+                "requestBody": {
+                    "description": "Input data format",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "會員名稱",
+                                        "type": "string",
+                                        "example": "王小明"
+                                    },
+                                    "email": {
+                                        "description": "會員信箱",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "member@test.com"
+                                    },
+                                    "password": {
+                                        "description": "登入密碼（需包含英數）",
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "phone": {
+                                        "description": "手機號碼",
+                                        "type": "string",
+                                        "example": "0911222333"
+                                    },
+                                    "birthday": {
+                                        "description": "生日",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "1990-01-01"
+                                    },
+                                    "gender": {
+                                        "description": "性別",
+                                        "type": "string",
+                                        "enum": [
+                                            "male",
+                                            "female",
+                                            "other"
+                                        ],
+                                        "example": "male"
+                                    },
+                                    "marriage": {
+                                        "description": "婚姻狀況",
+                                        "type": "string",
+                                        "enum": [
+                                            "single",
+                                            "married",
+                                            "divorced",
+                                            "widowed"
+                                        ],
+                                        "example": "single"
+                                    },
+                                    "education": {
+                                        "description": "教育程度",
+                                        "type": "string",
+                                        "enum": [
+                                            "primary_graduate",
+                                            "junior_graduate",
+                                            "senior_graduate",
+                                            "bachelor_graduate",
+                                            "master_graduate",
+                                            "doctor_graduate"
+                                        ],
+                                        "example": "bachelor_graduate"
+                                    },
+                                    "avatar": {
+                                        "description": "大頭貼檔案 ID",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "is_verify_mail": {
+                                        "description": "是否驗證信箱",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "roles": {
+                                        "description": "角色 ID 陣列",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2
+                                        ]
+                                    },
+                                    "address": {
+                                        "description": "地址陣列（可多筆）",
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "country_code",
+                                                "city",
+                                                "district",
+                                                "address_detail"
+                                            ],
+                                            "properties": {
+                                                "country_code": {
+                                                    "description": "國碼",
+                                                    "type": "string",
+                                                    "example": "TW"
+                                                },
+                                                "zip_code": {
+                                                    "description": "郵遞區號",
+                                                    "type": "string",
+                                                    "example": "407"
+                                                },
+                                                "city": {
+                                                    "description": "城市",
+                                                    "type": "string",
+                                                    "example": "台中市"
+                                                },
+                                                "district": {
+                                                    "description": "區域",
+                                                    "type": "string",
+                                                    "example": "西屯區"
+                                                },
+                                                "address_detail": {
+                                                    "description": "詳細地址",
+                                                    "type": "string",
+                                                    "example": "河南路二段262號"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "description": "狀態代碼",
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "description": "結果描述",
+                                            "type": "string",
+                                            "example": "操作成功"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "id",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "created_at": {
+                                                        "description": "建立時間",
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2021-07-07 12:00:00"
+                                                    },
+                                                    "updated_at": {
+                                                        "description": "更新時間",
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2021-07-07 12:00:00"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/members/{:id}": {
+            "get": {
+                "tags": [
+                    "Member"
+                ],
+                "summary": "取得會員資訊",
+                "description": "取得會員資訊",
+                "operationId": "getMember",
+                "parameters": [
+                    {
+                        "name": ":id",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "1"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "description": "狀態代碼",
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "description": "結果描述",
+                                            "type": "string",
+                                            "example": "操作成功"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "id",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "created_at": {
+                                                        "description": "建立時間",
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2021-07-07 12:00:00"
+                                                    },
+                                                    "updated_at": {
+                                                        "description": "更新時間",
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2021-07-07 12:00:00"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Member"
+                ],
+                "summary": "修改會員資訊",
+                "description": "修改會員資訊",
+                "operationId": "editMember",
+                "parameters": [
+                    {
+                        "name": ":id",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "1"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Input data format",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [],
+                                "properties": {
+                                    "title": {
+                                        "description": "標題",
+                                        "type": "string",
+                                        "example": "Title"
+                                    },
+                                    "description": {
+                                        "description": "描述",
+                                        "type": "string",
+                                        "example": "Description"
+                                    },
+                                    "content": {
+                                        "description": "內容",
+                                        "type": "string",
+                                        "example": "Content"
+                                    },
+                                    "category_id": {
+                                        "description": "分類ID",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "status": {
+                                        "description": "狀態",
+                                        "type": "string",
+                                        "enum": [
+                                            "published",
+                                            "draft"
+                                        ],
+                                        "example": "published"
+                                    },
+                                    "author_id": {
+                                        "description": "作者ID",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "started_at": {
+                                        "description": "開始時間",
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2021-07-07 12:00:00"
+                                    },
+                                    "ended_at": {
+                                        "description": "結束時間",
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2021-07-07 12:00:00"
+                                    },
+                                    "sort": {
+                                        "description": "排序",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "is_top": {
+                                        "description": "是否置頂",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "seo_title": {
+                                        "description": "SEO標題",
+                                        "type": "string",
+                                        "example": "SEO Title"
+                                    },
+                                    "seo_description": {
+                                        "description": "SEO描述",
+                                        "type": "string",
+                                        "example": "SEO Description"
+                                    },
+                                    "seo_keywords": {
+                                        "description": "SEO關鍵字",
+                                        "type": "string",
+                                        "example": "SEO Keywords"
+                                    },
+                                    "seo_slug": {
+                                        "description": "SEO網址",
+                                        "type": "string",
+                                        "example": "seo-slug"
+                                    },
+                                    "file_id": {
+                                        "description": "圖片ID",
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "tags": {
+                                        "description": "會員標籤",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "tag1",
+                                            "tag2"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "description": "狀態代碼",
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "description": "結果描述",
+                                            "type": "string",
+                                            "example": "操作成功"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "id",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "created_at": {
+                                                        "description": "建立時間",
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2021-07-07 12:00:00"
+                                                    },
+                                                    "updated_at": {
+                                                        "description": "更新時間",
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2021-07-07 12:00:00"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/members/batch_delete": {
+            "post": {
+                "tags": [
+                    "Member"
+                ],
+                "summary": "批次刪除會員",
+                "description": "批次刪除會員",
+                "operationId": "batchDeleteMember",
+                "requestBody": {
+                    "description": "Input data format",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [],
+                                "properties": {
+                                    "ids": {
+                                        "description": "會員ID",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            1,
+                                            2
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/members/batch_sort": {
+            "post": {
+                "tags": [
+                    "Member"
+                ],
+                "summary": "會員排序",
+                "description": "會員排序",
+                "operationId": "updateMemberOrder",
+                "requestBody": {
+                    "description": "Input data format",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "members"
+                                ],
+                                "properties": {
+                                    "members": {
+                                        "description": "會員列表",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "id": {
+                                                    "description": "會員ID",
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "sort": {
+                                                    "description": "排序",
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Image": {
+                "description": "圖片",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "description": "標題",
+                        "type": "string",
+                        "example": "title"
+                    },
+                    "alt": {
+                        "description": "替代文字",
+                        "type": "string",
+                        "example": "alt"
+                    },
+                    "caption": {
+                        "description": "說明",
+                        "type": "string",
+                        "example": "caption"
+                    },
+                    "url": {
+                        "description": "圖片網址",
+                        "type": "string",
+                        "example": "https://via.placeholder.com/800x600"
+                    }
+                },
+                "type": "object"
+            },
+            "Meta": {
+                "description": "分頁資訊",
+                "properties": {
+                    "from": {
+                        "description": "起始筆數",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "last_page": {
+                        "description": "最後頁數",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "per_page": {
+                        "description": "每一頁筆數",
+                        "type": "integer",
+                        "example": 15
+                    },
+                    "to": {
+                        "description": "結束筆數",
+                        "type": "integer",
+                        "example": 15
+                    },
+                    "total": {
+                        "description": "總筆數",
+                        "type": "integer",
+                        "example": 15
+                    },
+                    "count": {
+                        "description": "筆數",
+                        "type": "integer",
+                        "example": 15
+                    }
+                },
+                "type": "object"
+            },
+            "Links": {
+                "description": "連結",
+                "properties": {
+                    "first": {
+                        "description": "第一頁連結",
+                        "type": "string",
+                        "example": "http:://xxxx.xxxx.xxxx"
+                    },
+                    "prev": {
+                        "description": "前一頁連結",
+                        "type": "string",
+                        "example": "http:://xxxx.xxxx.xxxx"
+                    },
+                    "self": {
+                        "description": "目前頁面連結",
+                        "type": "string",
+                        "example": "http:://xxxx.xxxx.xxxx"
+                    },
+                    "next": {
+                        "description": "下一頁連結",
+                        "type": "string",
+                        "example": "http:://xxxx.xxxx.xxxx"
+                    },
+                    "last": {
+                        "description": "最後一頁連結",
+                        "type": "string",
+                        "example": "http:://xxxx.xxxx.xxxx"
+                    }
+                },
+                "type": "object"
+            },
+            "Tag": {
+                "description": "標籤",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "名稱",
+                        "type": "string",
+                        "example": "name"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "responses": {
+            "401": {
+                "description": "Unauthorized",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "description": "狀態",
+                                    "type": "boolean",
+                                    "example": false
+                                },
+                                "message": {
+                                    "description": "訊息",
+                                    "type": "string",
+                                    "example": "Validation Error"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "403": {
+                "description": "Forbidden",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "description": "狀態",
+                                    "type": "boolean",
+                                    "example": false
+                                },
+                                "message": {
+                                    "description": "訊息",
+                                    "type": "string",
+                                    "example": "Validation Error"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "404": {
+                "description": "Not Found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "description": "狀態",
+                                    "type": "boolean",
+                                    "example": false
+                                },
+                                "message": {
+                                    "description": "訊息",
+                                    "type": "string",
+                                    "example": "Validation Error"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "422": {
+                "description": "Validation Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "description": "狀態",
+                                    "type": "boolean",
+                                    "example": false
+                                },
+                                "message": {
+                                    "description": "訊息",
+                                    "type": "string",
+                                    "example": "Validation Error"
+                                },
+                                "errors": {
+                                    "description": "錯誤訊息",
+                                    "properties": {
+                                        "message": {
+                                            "description": "錯誤訊息",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "The message field is required."
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "description": "狀態",
+                                    "type": "boolean",
+                                    "example": false
+                                },
+                                "message": {
+                                    "description": "訊息",
+                                    "type": "string",
+                                    "example": "Internal Server Error"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerToken": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Upload",
+            "description": "Upload"
+        },
+        {
+            "name": "User",
+            "description": "User"
+        },
+        {
+            "name": "Member",
+            "description": "Member"
+        }
+    ]
+}
