@@ -9,9 +9,18 @@ namespace App\Swagger;
  * )
  *
  * @OA\Server(
- *      url="/api",
- *      description="dev api",
- *  )
+ *     url="/api",
+ *     description="dev api",
+ *     description="開發環境API"
+ * )
+ *
+ * @OA\Server(
+ *     url="https://demo-course-system.elf-run.com/api",
+ *     description="demo api",
+ *     description="demo環境API"
+ * )
+ *
+ *
  */
 class Swagger
 {

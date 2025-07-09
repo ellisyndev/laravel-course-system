@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('college_id')->constrained()->onDelete('cascade');
+            $table->string('code', 5)->unique()->comment('系所代碼，如 CS 代表資訊工程系');
+            $table->foreignId('college_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
             $table->string('name')->comment('系所名稱，如 資訊工程系');
             $table->timestamps();
         });

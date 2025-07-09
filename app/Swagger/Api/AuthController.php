@@ -8,7 +8,7 @@ class AuthController
      * @OA\Post(
      *     path="/auth/login",
      *     summary="登入",
-     *     description="登入",
+     *     description="登入,<p>測試帳號：S0000001 / T0000001</p><p>密碼皆為：password1</p>",
      *     tags={"Auth"},
      *     operationId="login",
      *
@@ -36,8 +36,6 @@ class AuthController
      *             @OA\Property( property="data", type="object",
      *                 @OA\Property( property="token_type", type="string", description="token類型", example="Bearer"),
      *                 @OA\Property( property="token", type="string", description="token", example="3|sDOHhfF2gtzp5zNsXNx9yYmAjNcoOecTB1cr3UWD"),
-     *                 @OA\Property( property="name", type="string", description="使用者名稱", example="開發者帳號"),
-     *                 @OA\Property( property="email", type="string", description="email帳號", example="admin@test.com"),
      *             ),
      *         ),
      *     )
@@ -58,10 +56,13 @@ class AuthController
      *     security={
      *         {"bearerToken": {}}
      *     },
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successful Operation",
+     *
      *         @OA\JsonContent(type="object",
+     *
      *             @OA\Property( property="message", type="string", example="OK"),
      *         ),
      *     )

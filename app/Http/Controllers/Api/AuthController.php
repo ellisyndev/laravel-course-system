@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Api;
 
+use App\Enums\AdvancedApiResponseTrait;
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Services\Api\Auth\AuthService;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Password;
 
 class AuthController extends Controller
 {
-    use ApiResponse;
+    use AdvancedApiResponseTrait;
 
     private AuthService $userAuthService;
 
@@ -30,7 +31,7 @@ class AuthController extends Controller
         $attributes = $request->only(['code', 'password']);
         $token = $this->authService->authenticate($attributes);
 
-        return $this->response(['token' => $token]);
+        return $this->respondSuccess($token);
     }
 
     /**
@@ -46,7 +47,7 @@ class AuthController extends Controller
             'message' => 'OK',
         ];
 
-        return $this->response($data);
+        return $this->respondSuccess($data);
     }
 
     /**

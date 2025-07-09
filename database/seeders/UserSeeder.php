@@ -7,7 +7,6 @@ use App\Models\Department;
 use App\Models\StudentProfile;
 use App\Models\TeacherProfile;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,13 +25,13 @@ class UserSeeder extends Seeder
 
         // 建立學生
         foreach (range(1, 10) as $i) {
-            $code = 'S' . str_pad($i, 7, '0', STR_PAD_LEFT);
-            $name = $studentLastNames[array_rand($studentLastNames)] . $studentFirstNames[array_rand($studentFirstNames)];
+            $code = 'S'.str_pad($i, 7, '0', STR_PAD_LEFT);
+            $name = $studentLastNames[array_rand($studentLastNames)].$studentFirstNames[array_rand($studentFirstNames)];
 
             $user = User::create([
                 'code' => $code,
                 'name' => $name,
-                'email' => $code . '@demo.edu.tw',
+                'email' => $code.'@demo.edu.tw',
                 'password' => Hash::make('password1'),
                 'role' => 'student',
                 'email_verified_at' => now(),
@@ -50,13 +49,13 @@ class UserSeeder extends Seeder
 
         // 建立教師
         foreach (range(1, 10) as $i) {
-            $code = 'T' . str_pad($i, 7, '0', STR_PAD_LEFT);
-            $name = $teacherLastNames[array_rand($teacherLastNames)] . $teacherFirstNames[array_rand($teacherFirstNames)];
+            $code = 'T'.str_pad($i, 7, '0', STR_PAD_LEFT);
+            $name = $teacherLastNames[array_rand($teacherLastNames)].$teacherFirstNames[array_rand($teacherFirstNames)];
 
             $user = User::create([
                 'code' => $code,
                 'name' => $name,
-                'email' => $code . '@demo.edu.tw',
+                'email' => $code.'@demo.edu.tw',
                 'password' => Hash::make('password1'),
                 'role' => 'teacher',
                 'email_verified_at' => now(),
@@ -67,8 +66,8 @@ class UserSeeder extends Seeder
                 'department_id' => $departments ? $departments[array_rand($departments)] : null,
                 'college_id' => $colleges ? $colleges[array_rand($colleges)] : null,
                 'title' => ['professor', 'associate_professor', 'lecturer'][rand(0, 2)],
-                'office' => 'H' . rand(401, 419),
-                'phone_ext' => '7' . rand(100, 999),
+                'office' => 'H'.rand(401, 419),
+                'phone_ext' => '7'.rand(100, 999),
                 'expertise' => '人工智慧、資料科學',
             ]);
         }
