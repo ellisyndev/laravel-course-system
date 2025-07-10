@@ -55,6 +55,16 @@ class CreateCourseRequest extends FormRequest
                 'string',
                 'size:5', // Assuming semester_code is in the format like '115-1'
             ],
+            'start_time_code' => [
+                'required',
+                'string',
+                'size:1',
+            ],
+            'end_time_code' => [
+                'required',
+                'string',
+                'size:1',
+            ],
             'classroom_id' => [
                 'nullable',
                 'exists:classrooms,id',

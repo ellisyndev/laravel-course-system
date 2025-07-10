@@ -26,11 +26,11 @@ class CourseController extends Controller
         try {
             $courses = $this->coursetService->getCourseWithPagination($user->id, $filters);
 
-            return $this->respondSuccess($courses, 'Courses retrieved successfully');
+            return $this->apiResponse($courses);
         } catch (\Exception $e) {
             Log::error('CourseController@index', ['message' => $e->getMessage()]);
 
-            return $this->respondError('Failed to retrieve courses: ');
+            return $this->respondError('Failed to retrieve courses:');
         }
     }
 }

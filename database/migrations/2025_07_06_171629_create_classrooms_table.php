@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('code')->unique()->comment('教室代號，如 A101');
             $table->string('name')->comment('教室名稱');
             $table->string('location')->comment('地點或樓層');
+            $table->timestamps();
         });
     }
 

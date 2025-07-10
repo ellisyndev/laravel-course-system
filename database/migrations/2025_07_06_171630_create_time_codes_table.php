@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('periods', function (Blueprint $table) {
+        Schema::create('time_codes', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique()->comment('節次代碼，如 A, B, C, D');
-            $table->string('start_time')->comment('hhmm，例如 1300');
-            $table->string('end_time')->comment('hhmm，例如 1350');
+            $table->string('code', 2)->unique()->comment('時間代碼');
+            $table->string('time', 4)->comment('時間格式 HHMM，如 0830 表示 08:30');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('periods');
+        Schema::dropIfExists('time_codes');
     }
 };

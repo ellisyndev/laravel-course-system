@@ -27,6 +27,20 @@ class CourseRepository extends BaseRepository
             $model->where('is_required', $isRequired);
         }
 
-        return $model->paginate(10);
+        $sorting = $filter['sorting'] ?? 'id';
+        $direction = $filter['direction'] ?? 'asc';
+
+        $model->orderBy($sorting, $direction);
+
+        $perPage = $filter['per_page'] ?? 15;
+        $page = $filter['page'] ?? 1;
+
+
+        return $model->paginate(
+            $perPage,
+            ['*'],
+            'page',
+            $page
+        );
     }
 }

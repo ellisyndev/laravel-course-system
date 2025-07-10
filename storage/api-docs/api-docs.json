@@ -414,7 +414,7 @@
         "/student/courses/cancel": {
             "post": {
                 "tags": [
-                    "Course"
+                    "Student"
                 ],
                 "summary": "取消選課",
                 "description": "取消選課",
@@ -572,7 +572,7 @@
                                         "example": 1
                                     },
                                     "level_code": {
-                                        "description": "課程等級代碼",
+                                        "description": "年級代碼",
                                         "type": "string",
                                         "example": "1"
                                     },
@@ -595,6 +595,16 @@
                                         "description": "學年度代碼",
                                         "type": "string",
                                         "example": "115-1"
+                                    },
+                                    "start_time_code": {
+                                        "description": "上課時間代碼",
+                                        "type": "string",
+                                        "example": "1"
+                                    },
+                                    "end_time_code": {
+                                        "description": "下課時間代碼",
+                                        "type": "string",
+                                        "example": "2"
                                     },
                                     "max_students": {
                                         "description": "人數上限",

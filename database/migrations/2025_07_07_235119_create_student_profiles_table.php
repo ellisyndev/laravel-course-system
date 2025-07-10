@@ -20,7 +20,6 @@ return new class extends Migration
             $table->unsignedTinyInteger('grade')->nullable()->comment('實際年級：大一=1，碩一=5 等');
             $table->enum('education_level', ['bachelor', 'master', 'phd', 'junior_college', 'technical'])->default('bachelor')->comment('學制');
             $table->enum('program_type', ['day', 'night', 'inservice'])->default('day')->comment('日間、夜間、在職');
-
             $table->timestamps();
         });
     }

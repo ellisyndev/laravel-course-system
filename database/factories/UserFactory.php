@@ -7,38 +7,55 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends Factory<\App\Models\User>
  */
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
+    protected static ?string $password = null;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
+        $role = $this->faker->randomElement(['student', 'teacher']);
+
+        $code = $this->generateUniqueCode($role);
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'code' => $code,
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => Hash::make('password1'),
             'remember_token' => Str::random(10),
+            'role' => $role,
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
+    protected function generateUniqueCode(string $role): string
     {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
+        $prefix = $role === 'student' ? 'S' : 'T';
+        $timestamp = now()->format('His'); // 時:分:秒
+        $random = rand(100, 999);          // 三位亂數
+
+        return $prefix . $timestamp . $random;
+    }
+
+    public function student(): static
+    {
+        return $this->state(function () {
+            return [
+                'role' => 'student',
+                'code' => $this->generateUniqueCode('student'),
+            ];
+        });
+    }
+
+    public function teacher(): static
+    {
+        return $this->state(function () {
+            return [
+                'role' => 'teacher',
+                'code' => $this->generateUniqueCode('teacher'),
+            ];
+        });
     }
 }

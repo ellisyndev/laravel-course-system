@@ -76,7 +76,7 @@ class StudentController
     /**
      * @OA\Post(
      *     path="/student/courses/cancel",
-     *     tags={"Course"},
+     *     tags={"Student"},
      *     summary="取消選課",
      *     description="取消選課",
      *     operationId="cancelCourse",

@@ -17,9 +17,11 @@ return new class extends Migration
             $table->foreignId('course_id')->constrained('courses');
             $table->timestamp('enrolled_at')->nullable();
             $table->string('status')->comment('狀態');
+            $table->timestamps();
 
             $table->unique(['student_id', 'course_id']);
-            $table->index('status', 'idx_selections_status');
+            $table->index(['student_id', 'course_id']);
+            $table->index(['course_id', 'created_at']);
         });
     }
 

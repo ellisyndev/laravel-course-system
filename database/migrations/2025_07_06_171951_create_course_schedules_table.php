@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('weekday')->comment('Mon, Tue, Wed, Thu, Fri, Sat, Sun');
             $table->foreignId('start_period_id')->constrained('periods');
             $table->foreignId('end_period_id')->constrained('periods');
+            $table->timestamps();
 
             $table->index('weekday', 'idx_schedules_weekday');
         });
