@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\AdvancedApiResponseTrait;
 use App\Http\Controllers\Controller;
-use App\Services\Api\Auth\AuthService;
+use App\Services\Api\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;

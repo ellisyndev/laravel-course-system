@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('end_time_code', 2)->nullable()->comment('下課時間代碼');
             $table->unsignedInteger('max_students')->comment('選課人數上限');
             $table->string('remarks')->nullable()->comment('備註');
+            $table->boolean('is_english_taught')->default(false)->comment('是否為全英語授課');
             $table->timestamps();
 
             $table->index(['semester_code', 'code']);

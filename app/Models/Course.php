@@ -26,8 +26,10 @@ class Course extends Model
         'max_students',
         'remarks',
         'code',
+        'weekday',
         'start_time_code',
         'end_time_code',
+        'is_english_taught',
     ];
 
     protected $casts = [
@@ -100,7 +102,7 @@ class Course extends Model
 
     public function students(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'course_student', 'course_id', 'student_id')
+        return $this->belongsToMany(User::class, 'course_selections', 'course_id', 'student_id')
             ->withTimestamps();
     }
 

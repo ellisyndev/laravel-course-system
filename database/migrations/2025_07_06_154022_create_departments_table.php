@@ -18,7 +18,7 @@ return new class extends Migration
                 ->nullable()
                 ->constrained()
                 ->nullOnDelete();
-            $table->string('name')->comment('系所名稱，如 資訊工程系');
+            $table->string('name', 50)->comment('系所名稱，如 資訊工程系');
             $table->timestamps();
 
             $table->index('name');

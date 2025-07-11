@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('colleges', function (Blueprint $table) {
             $table->id();
             $table->string('code', '3')->unique()->comment('學院代碼，如 ENG');
-            $table->string('name')->unique()->comment('學院名稱，如 工學院');
+            $table->string('name', 20)->unique()->comment('學院名稱，如 工學院');
             $table->timestamps();
 
             $table->index('name');

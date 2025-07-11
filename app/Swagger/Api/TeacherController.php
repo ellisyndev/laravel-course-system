@@ -41,6 +41,7 @@ class TeacherController
      *     @OA\Property(property="credit", type="integer", description="學分數", example=3),
      *     @OA\Property(property="is_required", type="boolean", description="是否必修", example=true),
      *     @OA\Property(property="semester_code", type="string", description="學年度代碼", example="115-1"),
+     *     @OA\Property(property="weekday", type="string", description="上課星期", example="1"),
      *     @OA\Property(property="start_time_code", type="string", description="上課時間代碼", example="1"),
      *     @OA\Property(property="end_time_code", type="string", description="下課時間代碼", example="2"),
      *     @OA\Property(property="max_students", type="integer", description="人數上限", example=30),

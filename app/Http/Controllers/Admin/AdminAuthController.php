@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\AdvancedApiResponseTrait;
 use App\Http\Controllers\Controller;
-use App\Services\Admin\AdminAuth\AdminAuthService;
-use App\Services\Api\Auth\AuthService;
+use App\Services\Admin\AdminAuthService;
+use App\Services\Api\AuthService;
 use Illuminate\Http\Request;
 
 class AdminAuthController extends Controller
@@ -14,9 +14,7 @@ class AdminAuthController extends Controller
 
     private AuthService $userAuthService;
 
-    public function __construct(protected AdminAuthService $authService)
-    {
-    }
+    public function __construct(protected AdminAuthService $authService) {}
 
     /**
      * 登入
@@ -46,6 +44,7 @@ class AdminAuthController extends Controller
     public function profile(Request $request)
     {
         $admin = $request->user();
+
         return $this->respondSuccess($admin, '取得管理員資料成功');
     }
 }

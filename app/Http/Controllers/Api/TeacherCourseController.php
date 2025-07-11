@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Enums\AdvancedApiResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TeacherCourse\CreateCourseRequest;
-use App\Services\Api\Course\CourseService;
+use App\Http\Resources\Course\CourseResource;
+use App\Services\Api\CourseService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -34,7 +35,10 @@ class TeacherCourseController extends Controller
         try {
             $course = $this->coursetService->createCourse($user->id, $validated);
 
-            return $this->respondSuccess($course, 'Course created successfully');
+            return $this->respondSuccess(
+                (new CourseResource($course))->withDetail(),
+                'Course created successfully'
+            );
         } catch (\Exception $e) {
             Log::error('CourseController@store', ['message' => $e->getMessage()]);
 

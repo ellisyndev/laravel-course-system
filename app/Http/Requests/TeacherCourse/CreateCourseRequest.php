@@ -55,6 +55,11 @@ class CreateCourseRequest extends FormRequest
                 'string',
                 'size:5', // Assuming semester_code is in the format like '115-1'
             ],
+            'weekday' => [
+                'required',
+                'string',
+                'size:1', // Assuming weekday is a single character representing the day
+            ],
             'start_time_code' => [
                 'required',
                 'string',

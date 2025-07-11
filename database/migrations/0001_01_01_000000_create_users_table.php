@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique()->comment('代號');
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->string('code', 20)->unique()->comment('代號');
+            $table->string('name', 100)->comment('姓名');
+            $table->string('email', 255)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['student', 'teacher'])->default('student')->comment('角色');

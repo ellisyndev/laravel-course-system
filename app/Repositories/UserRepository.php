@@ -15,4 +15,9 @@ class UserRepository extends BaseRepository
     {
         return $this->model->where($conditions)->get();
     }
+
+    public function getTeachers(): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->model->where('role', 'teacher')->get();
+    }
 }

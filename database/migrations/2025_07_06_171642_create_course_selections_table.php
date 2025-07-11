@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->constrained('users')->comment('學生 ID');
             $table->foreignId('course_id')->constrained('courses');
-            $table->timestamp('enrolled_at')->nullable();
-            $table->string('status')->comment('狀態');
+            $table->timestamp('enrolled_at')->nullable()->comment('加選時間');
+            $table->timestamp('withdrawn_at')->nullable()->comment('退選時間');
+            $table->string('status', 10)->comment('狀態');
             $table->timestamps();
 
             $table->unique(['student_id', 'course_id']);

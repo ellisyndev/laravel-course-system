@@ -119,4 +119,9 @@ class BaseRepository implements BaseRepositoryInterface
         return $this->model->newQuery()
             ->upsert($data, $uniqueKeys, $update);
     }
+
+    public function firstOrNew(array $attributes, array $values = []): Model
+    {
+        return $this->model->newQuery()->firstOrNew($attributes, $values);
+    }
 }

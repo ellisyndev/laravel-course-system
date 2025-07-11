@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Api\Course;
+namespace App\Services\Api;
 
 use App\Repositories\CourseRepository;
 use Illuminate\Database\Eloquent\Model;
@@ -19,5 +19,10 @@ class CourseService
         $data = $this->courseRepository->create($data);
 
         return $data;
+    }
+
+    public function getCourseById(int $courseId): Model
+    {
+        return $this->courseRepository->findOrFail($courseId);
     }
 }

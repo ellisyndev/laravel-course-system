@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreignId('college_id')->nullable()->comment('學院 ID')->constrained()->nullOnDelete();
             $table->foreignId('department_id')->nullable()->comment('系所 ID')->constrained()->nullOnDelete();
 
-            $table->string('title')->nullable()->comment('職稱，如教授、副教授、講師');
-            $table->string('office')->nullable()->comment('辦公室位置，如 H408');
-            $table->string('phone_ext')->nullable()->comment('分機號碼');
+            $table->string('title', 50)->nullable()->comment('職稱，如教授、副教授、講師');
+            $table->string('office', 50)->nullable()->comment('辦公室位置，如 H408');
+            $table->string('phone_ext', 10)->nullable()->comment('分機號碼');
             $table->text('expertise')->nullable()->comment('研究專長');
 
             $table->timestamps();

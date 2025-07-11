@@ -1051,6 +1051,11 @@
                                         "type": "string",
                                         "example": "115-1"
                                     },
+                                    "weekday": {
+                                        "description": "上課星期",
+                                        "type": "string",
+                                        "example": "1"
+                                    },
                                     "start_time_code": {
                                         "description": "上課時間代碼",
                                         "type": "string",

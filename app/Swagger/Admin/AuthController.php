@@ -49,7 +49,6 @@ class AuthController
      */
     public function login() {}
 
-
     /**
      * @OA\Post(
      *     path="/auth/logout",
@@ -87,10 +86,13 @@ class AuthController
      *     security={
      *         {"bearerToken": {}}
      *     },
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successful Operation",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="id", type="integer", example=1),
      *             @OA\Property(property="name", type="string", example="系統管理員"),
      *             @OA\Property(property="email", type="string", example="admin@example.com")

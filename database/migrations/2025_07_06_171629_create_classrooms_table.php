@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('classrooms', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique()->comment('教室代號，如 A101');
-            $table->string('name')->comment('教室名稱');
-            $table->string('location')->comment('地點或樓層');
+            $table->string('code', 10)->unique()->comment('教室代號，如 A101');
+            $table->string('name', 50)->comment('教室名稱');
+            $table->string('location', 100)->comment('地點或樓層');
             $table->timestamps();
         });
     }

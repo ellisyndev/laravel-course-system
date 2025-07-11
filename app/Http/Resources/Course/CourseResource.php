@@ -12,7 +12,6 @@ class CourseResource extends JsonResource
     public function withDetail(): static
     {
         $this->detailed = true;
-
         return $this;
     }
 
@@ -33,7 +32,9 @@ class CourseResource extends JsonResource
             'teacher_email' => $this->teacher?->email,
 
             // 課程時間
+            'start_time_code' => $this->start_time_code,
             'start_time' => $this->startTime?->time,
+            'end_time_code' => $this->end_time_code,
             'end_time' => $this->endTime?->time,
 
             // 所屬單位
