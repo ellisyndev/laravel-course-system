@@ -65,10 +65,6 @@ class BaseRepository implements BaseRepositoryInterface
 
     /**
      * Destroy records
-     *
-     * @param  array  $ids
-     *
-     * @return int
      */
     public function destroy(array $ids): int
     {
@@ -116,11 +112,7 @@ class BaseRepository implements BaseRepositoryInterface
     /**
      * Upsert a record
      *
-     * @param  array  $data
-     * @param  array  $uniqueKeys
      * @param  array|null  $update
-     *
-     * @return bool
      */
     public function upsert(array $data, array $uniqueKeys, $update = null): bool
     {

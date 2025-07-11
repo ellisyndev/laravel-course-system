@@ -8,10 +8,6 @@
         {
             "url": "/api",
             "description": "開發環境API"
-        },
-        {
-            "url": "https://demo-course-system.elf-run.com/api",
-            "description": "demo環境API"
         }
     ],
     "paths": {
@@ -37,7 +33,7 @@
                                     "password": {
                                         "description": "密碼",
                                         "type": "string",
-                                        "example": "password1"
+                                        "example": "Password!123"
                                     }
                                 },
                                 "type": "object"
@@ -52,6 +48,16 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
+                                        "code": {
+                                            "description": "狀態代碼",
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "description": "結果描述",
+                                            "type": "string",
+                                            "example": "操作成功"
+                                        },
                                         "data": {
                                             "properties": {
                                                 "token_type": {
@@ -63,6 +69,16 @@
                                                     "description": "token",
                                                     "type": "string",
                                                     "example": "3|sDOHhfF2gtzp5zNsXNx9yYmAjNcoOecTB1cr3UWD"
+                                                },
+                                                "user_id": {
+                                                    "description": "使用者ID",
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "role": {
+                                                    "description": "使用者角色",
+                                                    "type": "string",
+                                                    "example": "student"
                                                 }
                                             },
                                             "type": "object"
@@ -173,13 +189,83 @@
                         }
                     },
                     {
-                        "name": "teach_id",
+                        "name": "teacher_id",
                         "in": "query",
                         "description": "授課教師ID",
                         "required": false,
                         "schema": {
                             "type": "integer",
                             "example": 1
+                        }
+                    },
+                    {
+                        "name": "college_id",
+                        "in": "query",
+                        "description": "學院ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "department_id",
+                        "in": "query",
+                        "description": "系所ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    },
+                    {
+                        "name": "level_code",
+                        "in": "query",
+                        "description": "年級代碼",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "semester_code",
+                        "in": "query",
+                        "description": "學年度代碼",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "115-1"
+                        }
+                    },
+                    {
+                        "name": "classroom_id",
+                        "in": "query",
+                        "description": "教室ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 5
+                        }
+                    },
+                    {
+                        "name": "teacher_name",
+                        "in": "query",
+                        "description": "教師姓名模糊搜尋",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "林"
+                        }
+                    },
+                    {
+                        "name": "course_code",
+                        "in": "query",
+                        "description": "課程代碼",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "CHI1001"
                         }
                     },
                     {
@@ -282,6 +368,375 @@
                     },
                     "422": {
                         "$ref": "#/components/responses/422"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/options/colleges_departments": {
+            "get": {
+                "tags": [
+                    "Option"
+                ],
+                "summary": "取得學院與系所列表",
+                "description": "取得每個學院底下的系所",
+                "operationId": "getCollegesWithDepartments",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "LIT"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "文學院"
+                                                    },
+                                                    "departments": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "college_id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "code": {
+                                                                    "type": "string",
+                                                                    "example": "LIT"
+                                                                },
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "example": "中文系"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/options/colleges": {
+            "get": {
+                "tags": [
+                    "Option"
+                ],
+                "summary": "取得學院選項",
+                "description": "取得所有學院",
+                "operationId": "getColleges",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "LIT"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "文學院"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/options/departments": {
+            "get": {
+                "tags": [
+                    "Option"
+                ],
+                "summary": "依學院取得系所選項",
+                "description": "依學院取得系所選項",
+                "operationId": "getDepartments",
+                "parameters": [
+                    {
+                        "name": "college_id",
+                        "in": "query",
+                        "description": "學院 ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 3
+                                                    },
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "CHI"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "中文系"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/options/teachers": {
+            "get": {
+                "tags": [
+                    "Option"
+                ],
+                "summary": "取得教師選項",
+                "description": "取得所有教師",
+                "operationId": "getTeachers",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 11
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "吳玉梅"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/options/classrooms": {
+            "get": {
+                "tags": [
+                    "Option"
+                ],
+                "summary": "取得教室選項",
+                "description": "取得所有教室",
+                "operationId": "getClassrooms",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 5
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "H403"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/options/semesters": {
+            "get": {
+                "tags": [
+                    "Option"
+                ],
+                "summary": "取得學期選項",
+                "description": "近年學年度（如 115-1、115-2）",
+                "operationId": "getSemesters",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "115-1"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/options/time_codes": {
+            "get": {
+                "tags": [
+                    "Option"
+                ],
+                "summary": "取得節次選項",
+                "description": "取得所有課程節次（時間代碼）",
+                "operationId": "getTimeCodes",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "操作成功"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "code": {
+                                                        "description": "節次代碼",
+                                                        "type": "string",
+                                                        "example": "01"
+                                                    },
+                                                    "time": {
+                                                        "description": "實際時間 HHMM",
+                                                        "type": "string",
+                                                        "example": "0830"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1070,6 +1525,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Option",
+            "description": "下拉選單相關 API"
+        },
         {
             "name": "Student",
             "description": "學生相關API"

@@ -13,20 +13,23 @@ class CollegeSeeder extends Seeder
     public function run(): void
     {
         $colleges = [
-            '文學院',
-            '理學院',
-            '工學院',
-            '管理學院',
-            '社會科學院',
-            '法律學院',
-            '醫學院',
-            '教育學院',
-            '國際事務學院',
-            '電資學院',
+            ['code' => 'AR', 'name' => '文學院'],
+            ['code' => 'SC', 'name' => '理學院'],
+            ['code' => 'EN', 'name' => '工學院'],
+            ['code' => 'MA', 'name' => '管理學院'],
+            ['code' => 'SO', 'name' => '社會科學院'],
+            ['code' => 'LA', 'name' => '法律學院'],
+            ['code' => 'ME', 'name' => '醫學院'],
+            ['code' => 'ED', 'name' => '教育學院'],
+            ['code' => 'IN', 'name' => '國際事務學院'],
+            ['code' => 'EE', 'name' => '電資學院'],
         ];
 
-        foreach ($colleges as $name) {
-            College::firstOrCreate(['name' => $name]);
+        foreach ($colleges as $item) {
+            College::firstOrCreate(
+                ['code' => $item['code']],
+                ['name' => $item['name']]
+            );
         }
     }
 }

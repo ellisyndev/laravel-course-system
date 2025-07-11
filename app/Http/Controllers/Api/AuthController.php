@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Enums\AdvancedApiResponseTrait;
-use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Services\Api\Auth\AuthService;
 use Illuminate\Http\Request;

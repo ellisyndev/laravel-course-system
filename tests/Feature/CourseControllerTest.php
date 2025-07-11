@@ -25,7 +25,6 @@ class CourseControllerTest extends TestCase
 
     /**
      * 測試未登入不可取得課程列表
-     * @return void
      */
     public function test_guest_cannot_access_courses(): void
     {
@@ -39,7 +38,6 @@ class CourseControllerTest extends TestCase
 
     /**
      * 測試可以取得課程列表
-     * @return void
      */
     public function test_user_can_get_course_list(): void
     {
@@ -53,47 +51,51 @@ class CourseControllerTest extends TestCase
             ->assertJsonStructure([
                 'status',
                 'message',
-                'current_page',
                 'data' => [
                     '*' => [
                         'id',
                         'code',
                         'name',
                         'description',
-                        'content',
-                        'teacher_id',
-                        'college_id',
-                        'department_id',
-                        'level_code',
-                        'classroom_id',
+                        'is_required',
+                        'credit',
+                        'remarks',
+                        'max_students',
+                        'teacher_name',
+                        'teacher_email',
                         'start_time',
                         'end_time',
-                        'credit',
-                        'is_required',
+                        'college_name',
+                        'department_name',
+                        'classroom_name',
+                        'level_code',
                         'semester_code',
-                        'max_students',
-                        'remarks',
                         'created_at',
                         'updated_at',
-                    ]
+                    ],
                 ],
-                'first_page_url',
-                'from',
-                'last_page',
-                'last_page_url',
-                'links',
-                'next_page_url',
-                'path',
-                'per_page',
-                'prev_page_url',
-                'to',
-                'total',
-            ]);
+                'links' => [
+                    'first',
+                    'last',
+                    'prev',
+                    'next',
+                ],
+                'meta' => [
+                    'current_page',
+                    'from',
+                    'last_page',
+                    'links',
+                    'path',
+                    'per_page',
+                    'to',
+                    'total',
+                ],
+            ])
+            ->assertJsonPath('meta.total', 3);
     }
 
     /**
      * 測試可以篩選課程
-     * @return void
      */
     public function test_user_can_filter_by_teacher_id(): void
     {
@@ -107,6 +109,6 @@ class CourseControllerTest extends TestCase
         $response = $this->actingAs($user)->getJson("/api/courses?teacher_id={$teacherA->id}");
 
         $response->assertOk()
-            ->assertJsonPath('total', 2);
+            ->assertJsonPath('meta.total', 2);
     }
 }

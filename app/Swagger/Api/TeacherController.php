@@ -20,13 +20,17 @@ class TeacherController
      *     security={
      *     {"bearerToken": {}}
      *     },
+     *
      *     @OA\RequestBody(
      *     description="課程資料",
      *     required=true,
+     *
      *     @OA\MediaType(
      *        mediaType="application/json",
+     *
      *     @OA\Schema(
      *        type="object",
+     *
      *     @OA\Property(property="name", type="string", description="課程名稱", example="範例課程"),
      *     @OA\Property(property="description", type="string", description="課程描述", example="範例課程敘述"),
      *     @OA\Property(property="content", type="string", description="課程大綱", example="範例課程內容"),
@@ -45,10 +49,13 @@ class TeacherController
      *   )
      *    )
      * *     ),
+     *
      *     @OA\Response(
      *      response=201,
      *     description="課程創建成功",
+     *
      *     @OA\JsonContent(
+     *
      *        @OA\Property(property="code", type="integer", description="狀態代碼", example=201),
      *     @OA\Property(property="message", type="string", description="結果描述", example="課程創建成功"),
      *     @OA\Property(
@@ -65,12 +72,11 @@ class TeacherController
      *     @OA\Property(property="updated_at", type="string", format="date-time", description="更新時間", example="2021-07-07 12:00:00")
      *     )
      *    )
-      *     ),
+     *     ),
+     *
      *     @OA\Response(response="401", ref="#/components/responses/401"),
      *     @OA\Response(response="422", ref="#/components/responses/422"),
-         * )
+     * )
      */
-    public function store() {
-
-    }
+    public function store() {}
 }

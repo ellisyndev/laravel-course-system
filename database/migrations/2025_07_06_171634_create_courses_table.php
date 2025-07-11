@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('credit')->default(0)->comment('學分數');
             $table->boolean('is_required')->comment('是否為必修，true=必修，false=選修');
             $table->string('semester_code', 6)->comment('學年度，如 115-1 表示上學期');
+            $table->unsignedTinyInteger('weekday');
             $table->string('start_time_code', 2)->nullable()->comment('上課時間代碼');
             $table->string('end_time_code', 2)->nullable()->comment('下課時間代碼');
             $table->unsignedInteger('max_students')->comment('選課人數上限');

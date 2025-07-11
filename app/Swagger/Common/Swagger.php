@@ -1,27 +1,7 @@
 <?php
 
-namespace App\Swagger;
+namespace App\Swagger\Common;
 
-/**
- * @OA\Info(
- *     title="選課系統DEMO API",
- *     version="0.0.1"
- * )
- *
- * @OA\Server(
- *     url="/api",
- *     description="dev api",
- *     description="開發環境API"
- * )
- *
- * @OA\Server(
- *     url="https://demo-course-system.elf-run.com/api",
- *     description="demo api",
- *     description="demo環境API"
- * )
- *
- *
- */
 class Swagger
 {
     /**

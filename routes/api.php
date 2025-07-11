@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CourseController;
+use App\Http\Controllers\Api\OptionController;
 use App\Http\Controllers\Api\StudentCourseController;
 use App\Http\Controllers\Api\TeacherCourseController;
-use App\Http\Controllers\Api\CourseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,9 +14,18 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/auth/login', [AuthController::class, 'login']);
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum', 'api.token'])->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::get('courses', [CourseController::class, 'index']);
+    Route::prefix('options')->group(function () {
+        Route::get('colleges_departments', [OptionController::class, 'collegesWithDepartments']);
+        Route::get('colleges', [OptionController::class, 'colleges']);
+        Route::get('departments', [OptionController::class, 'departments']);
+        Route::get('teachers', [OptionController::class, 'teachers']);
+        Route::get('classrooms', [OptionController::class, 'classrooms']);
+        Route::get('semesters', [OptionController::class, 'semesters']);
+        Route::get('time_codes', [OptionController::class, 'timeCodes']);
+    });
 
     // 教師專區
     Route::middleware(['role:teacher'])->prefix('teacher')->group(function () {

@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
             DepartmentSeeder::class,
             TimeCodeSeeder::class,
             UserSeeder::class,
+            ClassroomSeeder::class,
+            AdminSeeder::class,
         ]);
     }
 }

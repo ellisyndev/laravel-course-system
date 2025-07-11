@@ -29,17 +29,12 @@ trait AdvancedApiResponseTrait
 
     /**
      * 成功響應
-     *
-     * @param  mixed  $data
-     * @param  string|null  $message
-     *
-     * @return JsonResponse
      */
     protected function respondSuccess(mixed $data = null, ?string $message = null): JsonResponse
     {
         return $this->apiResponse([
-            'status'  => $this->statusCode,
-            'data'    => $data,
+            'status' => $this->statusCode,
+            'data' => $data,
             'message' => $message,
         ]);
     }
@@ -52,9 +47,9 @@ trait AdvancedApiResponseTrait
     protected function respondError(string $message, $errors = null, int $statusCode = 400): JsonResponse
     {
         return $this->setStatusCode($statusCode)->apiResponse([
-            'status'  => $this->statusCode,
+            'status' => $this->statusCode,
             'message' => $message,
-            'errors'  => $errors,
+            'errors' => $errors,
         ]);
     }
 
@@ -66,7 +61,7 @@ trait AdvancedApiResponseTrait
     protected function apiResponse($data): JsonResponse
     {
         $response = [
-            'status'  => $this->statusCode,
+            'status' => $this->statusCode,
             'message' => $this->statusCode === 200 ? '操作成功' : '操作失敗',
         ];
 

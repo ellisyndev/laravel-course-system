@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
                 'code' => $code,
                 'name' => $name,
                 'email' => $code.'@demo.edu.tw',
-                'password' => Hash::make('password1'),
+                'password' => Hash::make('Password!123'),
                 'role' => 'student',
                 'email_verified_at' => now(),
             ]);
@@ -56,7 +56,7 @@ class UserSeeder extends Seeder
                 'code' => $code,
                 'name' => $name,
                 'email' => $code.'@demo.edu.tw',
-                'password' => Hash::make('password1'),
+                'password' => Hash::make('Password!123'),
                 'role' => 'teacher',
                 'email_verified_at' => now(),
             ]);

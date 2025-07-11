@@ -19,9 +19,7 @@ class TeacherCourseController extends Controller
         //
     }
 
-    public function index(Request $request): JsonResponse
-    {
-    }
+    public function index(Request $request): JsonResponse {}
 
     public function store(CreateCourseRequest $request): JsonResponse
     {
@@ -35,10 +33,12 @@ class TeacherCourseController extends Controller
 
         try {
             $course = $this->coursetService->createCourse($user->id, $validated);
+
             return $this->respondSuccess($course, 'Course created successfully');
         } catch (\Exception $e) {
             Log::error('CourseController@store', ['message' => $e->getMessage()]);
-            return $this->respondError('Failed to create course' . $e->getMessage(), 500);
+
+            return $this->respondError('Failed to create course'.$e->getMessage(), 500);
         }
     }
 

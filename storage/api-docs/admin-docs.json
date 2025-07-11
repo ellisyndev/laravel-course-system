@@ -1,0 +1,410 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "選課系統DEMO API",
+        "version": "0.0.1"
+    },
+    "servers": [
+        {
+            "url": "/admin",
+            "description": "開發環境後台API"
+        }
+    ],
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "後台登入",
+                "description": "使用管理者帳號登入，取得 Bearer Token",
+                "operationId": "adminLogin",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "admin@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "Password!123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "登入成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJh..."
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "Bearer"
+                                        },
+                                        "expires_in": {
+                                            "type": "integer",
+                                            "example": 3600
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "帳號或密碼錯誤"
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "登出",
+                "description": "使用管理者帳號登出",
+                "operationId": "adminlogout",
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/auth/profile": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "取得管理者資訊",
+                "description": "取得管理者資訊",
+                "operationId": "getAdminUserInfo",
+                "responses": {
+                    "200": {
+                        "description": "Successful Operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "系統管理員"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "admin@example.com"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Image": {
+                "description": "圖片",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "description": "標題",
+                        "type": "string",
+                        "example": "title"
+                    },
+                    "alt": {
+                        "description": "替代文字",
+                        "type": "string",
+                        "example": "alt"
+                    },
+                    "caption": {
+                        "description": "說明",
+                        "type": "string",
+                        "example": "caption"
+                    },
+                    "url": {
+                        "description": "圖片網址",
+                        "type": "string",
+                        "example": "https://via.placeholder.com/800x600"
+                    }
+                },
+                "type": "object"
+            },
+            "Meta": {
+                "description": "分頁資訊",
+                "properties": {
+                    "from": {
+                        "description": "起始筆數",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "last_page": {
+                        "description": "最後頁數",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "per_page": {
+                        "description": "每一頁筆數",
+                        "type": "integer",
+                        "example": 15
+                    },
+                    "to": {
+                        "description": "結束筆數",
+                        "type": "integer",
+                        "example": 15
+                    },
+                    "total": {
+                        "description": "總筆數",
+                        "type": "integer",
+                        "example": 15
+                    },
+                    "count": {
+                        "description": "筆數",
+                        "type": "integer",
+                        "example": 15
+                    }
+                },
+                "type": "object"
+            },
+            "Links": {
+                "description": "連結",
+                "properties": {
+                    "first": {
+                        "description": "第一頁連結",
+                        "type": "string",
+                        "example": "http:://xxxx.xxxx.xxxx"
+                    },
+                    "prev": {
+                        "description": "前一頁連結",
+                        "type": "string",
+                        "example": "http:://xxxx.xxxx.xxxx"
+                    },
+                    "self": {
+                        "description": "目前頁面連結",
+                        "type": "string",
+                        "example": "http:://xxxx.xxxx.xxxx"
+                    },
+                    "next": {
+                        "description": "下一頁連結",
+                        "type": "string",
+                        "example": "http:://xxxx.xxxx.xxxx"
+                    },
+                    "last": {
+                        "description": "最後一頁連結",
+                        "type": "string",
+                        "example": "http:://xxxx.xxxx.xxxx"
+                    }
+                },
+                "type": "object"
+            },
+            "Tag": {
+                "description": "標籤",
+                "properties": {
+                    "id": {
+                        "description": "ID",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "名稱",
+                        "type": "string",
+                        "example": "name"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "responses": {
+            "401": {
+                "description": "Unauthorized",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "description": "狀態",
+                                    "type": "boolean",
+                                    "example": false
+                                },
+                                "message": {
+                                    "description": "訊息",
+                                    "type": "string",
+                                    "example": "Validation Error"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "403": {
+                "description": "Forbidden",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "description": "狀態",
+                                    "type": "boolean",
+                                    "example": false
+                                },
+                                "message": {
+                                    "description": "訊息",
+                                    "type": "string",
+                                    "example": "Validation Error"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "404": {
+                "description": "Not Found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "description": "狀態",
+                                    "type": "boolean",
+                                    "example": false
+                                },
+                                "message": {
+                                    "description": "訊息",
+                                    "type": "string",
+                                    "example": "Validation Error"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "422": {
+                "description": "Validation Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "description": "狀態",
+                                    "type": "boolean",
+                                    "example": false
+                                },
+                                "message": {
+                                    "description": "訊息",
+                                    "type": "string",
+                                    "example": "Validation Error"
+                                },
+                                "errors": {
+                                    "description": "錯誤訊息",
+                                    "properties": {
+                                        "message": {
+                                            "description": "錯誤訊息",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": "The message field is required."
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "Internal Server Error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "description": "狀態",
+                                    "type": "boolean",
+                                    "example": false
+                                },
+                                "message": {
+                                    "description": "訊息",
+                                    "type": "string",
+                                    "example": "Internal Server Error"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerToken": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "後台登入"
+        }
+    ]
+}

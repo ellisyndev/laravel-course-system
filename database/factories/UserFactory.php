@@ -36,7 +36,7 @@ class UserFactory extends Factory
         $timestamp = now()->format('His'); // 時:分:秒
         $random = rand(100, 999);          // 三位亂數
 
-        return $prefix . $timestamp . $random;
+        return $prefix.$timestamp.$random;
     }
 
     public function student(): static

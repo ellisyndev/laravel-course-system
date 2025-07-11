@@ -2,35 +2,35 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\TimeCode;
+use Illuminate\Database\Seeder;
 
 class TimeCodeSeeder extends Seeder
 {
     public function run(): void
     {
-        $timeCodes = [
-            ['code' => '0',  'time' => '0710'],
-            ['code' => '1',  'time' => '0810'],
-            ['code' => '2',  'time' => '0910'],
-            ['code' => '3',  'time' => '1020'],
-            ['code' => '4',  'time' => '1120'],
-            ['code' => '5',  'time' => '1220'],
-            ['code' => '6',  'time' => '1320'],
-            ['code' => '7',  'time' => '1420'],
-            ['code' => '8',  'time' => '1530'],
-            ['code' => '9',  'time' => '1630'],
-            ['code' => '10', 'time' => '1730'],
-            ['code' => 'A',  'time' => '1825'],
-            ['code' => 'B',  'time' => '1920'],
-            ['code' => 'C',  'time' => '2015'],
-            ['code' => 'D',  'time' => '2110'],
+        $timeSlots = [
+            ['code' => '0',  'start' => '0710', 'end' => '0800', 'period' => 'morning'],
+            ['code' => '1',  'start' => '0810', 'end' => '0900', 'period' => 'morning'],
+            ['code' => '2',  'start' => '0910', 'end' => '1000', 'period' => 'morning'],
+            ['code' => '3',  'start' => '1020', 'end' => '1110', 'period' => 'morning'],
+            ['code' => '4',  'start' => '1120', 'end' => '1210', 'period' => 'morning'],
+            ['code' => '5',  'start' => '1220', 'end' => '1310', 'period' => 'noon'],
+            ['code' => '6',  'start' => '1320', 'end' => '1410', 'period' => 'afternoon'],
+            ['code' => '7',  'start' => '1420', 'end' => '1510', 'period' => 'afternoon'],
+            ['code' => '8',  'start' => '1530', 'end' => '1620', 'period' => 'afternoon'],
+            ['code' => '9',  'start' => '1630', 'end' => '1720', 'period' => 'afternoon'],
+            ['code' => '10', 'start' => '1730', 'end' => '1820', 'period' => 'afternoon'],
+            ['code' => 'A',  'start' => '1825', 'end' => '1915', 'period' => 'evening'],
+            ['code' => 'B',  'start' => '1920', 'end' => '2010', 'period' => 'evening'],
+            ['code' => 'C',  'start' => '2015', 'end' => '2105', 'period' => 'evening'],
+            ['code' => 'D',  'start' => '2110', 'end' => '2200', 'period' => 'evening'],
         ];
 
-        foreach ($timeCodes as $data) {
+        foreach ($timeSlots as $slot) {
             TimeCode::updateOrCreate(
-                ['code' => $data['code']],
-                ['time' => $data['time']]
+                ['code' => $slot['code']],
+                ['start_time' => $slot['start'], 'end_time' => $slot['end'], 'period' => $slot['period']]
             );
         }
     }

@@ -20,6 +20,9 @@ return new class extends Migration
                 ->nullOnDelete();
             $table->string('name')->comment('系所名稱，如 資訊工程系');
             $table->timestamps();
+
+            $table->index('name');
+            $table->index('code');
         });
     }
 

@@ -72,7 +72,6 @@ class StudentController
         //
     }
 
-
     /**
      * @OA\Post(
      *     path="/student/courses/cancel",

@@ -52,10 +52,52 @@ class CourseController
      *     ),
      *
      *     @OA\Parameter(
-     *          name="teach_id", in="query", description="授課教師ID", required=false,
+     *          name="teacher_id", in="query", description="授課教師ID", required=false,
      *
      *     @OA\Schema(type="integer", example=1),
      *     ),
+     *
+     *          @OA\Parameter(
+     *          name="college_id", in="query", description="學院ID", required=false,
+     *
+     *          @OA\Schema(type="integer", example=1),
+     *      ),
+     *
+     *      @OA\Parameter(
+     *          name="department_id", in="query", description="系所ID", required=false,
+     *
+     *          @OA\Schema(type="integer", example=1),
+     *      ),
+     *
+     *      @OA\Parameter(
+     *          name="level_code", in="query", description="年級代碼", required=false,
+     *
+     *          @OA\Schema(type="string", example="1"),
+     *      ),
+     *
+     *      @OA\Parameter(
+     *          name="semester_code", in="query", description="學年度代碼", required=false,
+     *
+     *          @OA\Schema(type="string", example="115-1"),
+     *      ),
+     *
+     *      @OA\Parameter(
+     *          name="classroom_id", in="query", description="教室ID", required=false,
+     *
+     *          @OA\Schema(type="integer", example=5),
+     *      ),
+     *
+     *      @OA\Parameter(
+     *          name="teacher_name", in="query", description="教師姓名模糊搜尋", required=false,
+     *
+     *          @OA\Schema(type="string", example="林"),
+     *      ),
+     *
+     *      @OA\Parameter(
+     *          name="course_code", in="query", description="課程代碼", required=false,
+     *
+     *          @OA\Schema(type="string", example="CHI1001"),
+     *      ),
      *
      *     @OA\Parameter(
      *         name="q", in="query", description="關鍵字搜尋", required=false,
