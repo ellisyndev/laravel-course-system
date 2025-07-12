@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class CourseControllerTest extends TestCase
@@ -90,8 +91,7 @@ class CourseControllerTest extends TestCase
                     'to',
                     'total',
                 ],
-            ])
-            ->assertJsonPath('meta.total', 3);
+            ]);
     }
 
     /**

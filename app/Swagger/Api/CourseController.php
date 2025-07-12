@@ -4,12 +4,13 @@ namespace App\Swagger\Api;
 
 /**
  * @OA\Tag(
- *     name="Article",
- *     description="文章"
+ *     name="Course",
+ *     description="課程",
  * )
  */
 class CourseController
 {
+
     /**
      * @OA\Get(
      *     path="/courses",

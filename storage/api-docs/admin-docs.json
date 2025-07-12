@@ -149,6 +149,1695 @@
                     }
                 ]
             }
+        },
+        "/classrooms": {
+            "get": {
+                "tags": [
+                    "Classroom"
+                ],
+                "summary": "取得教室列表",
+                "description": "取得所有教室資料，可支援模糊搜尋與分頁",
+                "operationId": "adminGetClassrooms",
+                "parameters": [
+                    {
+                        "name": "sorting",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "id"
+                        }
+                    },
+                    {
+                        "name": "direction",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "example": "desc"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "15"
+                        }
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "example": "H403"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "操作成功"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Classroom"
+                                            }
+                                        },
+                                        "meta": {
+                                            "$ref": "#/components/schemas/Meta"
+                                        },
+                                        "links": {
+                                            "$ref": "#/components/schemas/Links"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Classroom"
+                ],
+                "summary": "新增教室",
+                "operationId": "adminCreateClassroom",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code",
+                                    "name",
+                                    "location"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "example": "H503"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "電資大樓 H503"
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "example": "電資大樓 5 樓"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Classroom"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/classrooms/{id}": {
+            "get": {
+                "tags": [
+                    "Classroom"
+                ],
+                "summary": "查詢單筆教室",
+                "operationId": "adminShowClassroom",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Classroom"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Classroom"
+                ],
+                "summary": "更新教室資料",
+                "operationId": "adminUpdateClassroom",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "H503 調整名稱"
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "example": "電資大樓 5 樓 - 西側"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "成功"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Classroom"
+                ],
+                "summary": "刪除教室資料",
+                "operationId": "adminDeleteClassroom",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "刪除成功"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/courses": {
+            "get": {
+                "tags": [
+                    "Course"
+                ],
+                "summary": "取得課程列表",
+                "operationId": "adminGetCourses",
+                "parameters": [
+                    {
+                        "name": "sorting",
+                        "in": "query",
+                        "description": "排序欄位(預設id)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "id"
+                        }
+                    },
+                    {
+                        "name": "direction",
+                        "in": "query",
+                        "description": "排序方向(預設desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "example": "desc"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "頁碼(預設1)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "筆數(預設15)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "15"
+                        }
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "關鍵字搜尋",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "操作成功"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "CHI1001"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "現代中文選讀"
+                                                    },
+                                                    "credit": {
+                                                        "type": "integer",
+                                                        "example": 3
+                                                    },
+                                                    "is_required": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "teacher_id": {
+                                                        "type": "integer",
+                                                        "example": 5
+                                                    },
+                                                    "teacher_name": {
+                                                        "type": "string",
+                                                        "example": "林大明"
+                                                    },
+                                                    "semester_code": {
+                                                        "type": "string",
+                                                        "example": "115-1"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-10T10:00:00Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-10T10:00:00Z"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "$ref": "#/components/schemas/Meta"
+                                        },
+                                        "links": {
+                                            "$ref": "#/components/schemas/Links"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Course"
+                ],
+                "summary": "新增課程",
+                "operationId": "adminCreateCourse",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code",
+                                    "name",
+                                    "teacher_id",
+                                    "credit",
+                                    "semester_code"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "example": "MATH1001"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "微積分（一）"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "介紹極限、微分與積分的基本概念"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "課程將涵蓋極限、連續性、一變數微積分等..."
+                                    },
+                                    "credit": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "teacher_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "department_id": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "classroom_id": {
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "is_required": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "semester_code": {
+                                        "type": "string",
+                                        "example": "115-1"
+                                    },
+                                    "max_students": {
+                                        "type": "integer",
+                                        "example": 30
+                                    },
+                                    "remarks": {
+                                        "type": "string",
+                                        "example": "本課程建議大一修習"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "建立成功"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/courses/{id}": {
+            "get": {
+                "tags": [
+                    "Course"
+                ],
+                "summary": "取得單一課程",
+                "operationId": "adminShowCourse",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "code": {
+                                            "type": "string",
+                                            "example": "CHI1001"
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "example": "現代中文選讀"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "課程介紹"
+                                        },
+                                        "content": {
+                                            "type": "string",
+                                            "example": "詳細課程內容"
+                                        },
+                                        "credit": {
+                                            "type": "integer",
+                                            "example": 3
+                                        },
+                                        "teacher_id": {
+                                            "type": "integer",
+                                            "example": 2
+                                        },
+                                        "teacher_name": {
+                                            "type": "string",
+                                            "example": "王小明"
+                                        },
+                                        "semester_code": {
+                                            "type": "string",
+                                            "example": "115-1"
+                                        },
+                                        "classroom_id": {
+                                            "type": "integer",
+                                            "example": 5
+                                        },
+                                        "is_required": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Course"
+                ],
+                "summary": "更新課程",
+                "operationId": "adminUpdateCourse",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "微積分（一）"
+                                    },
+                                    "teacher_id": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "credit": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "is_required": {
+                                        "type": "boolean",
+                                        "example": false
+                                    },
+                                    "remarks": {
+                                        "type": "string",
+                                        "example": "修課限制：數學系學生優先"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "更新成功"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Course"
+                ],
+                "summary": "刪除課程",
+                "operationId": "adminDeleteCourse",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "刪除成功"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/departments": {
+            "get": {
+                "tags": [
+                    "Department"
+                ],
+                "summary": "取得系所列表",
+                "description": "取得所有系所資料",
+                "operationId": "adminGetDepartments",
+                "parameters": [
+                    {
+                        "name": "sorting",
+                        "in": "query",
+                        "description": "排序欄位(預設id)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "id"
+                        }
+                    },
+                    {
+                        "name": "direction",
+                        "in": "query",
+                        "description": "排序方向(預設desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "example": "desc"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "頁碼(預設1)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "筆數(預設15)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "15"
+                        }
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "關鍵字搜尋",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "電機"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "操作成功"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 3
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "電機工程學系"
+                                                    },
+                                                    "college_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "$ref": "#/components/schemas/Meta"
+                                        },
+                                        "links": {
+                                            "$ref": "#/components/schemas/Links"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Department"
+                ],
+                "summary": "新增系所資料",
+                "operationId": "adminCreateDepartment",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "college_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "電機工程學系"
+                                    },
+                                    "college_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "建立成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 201
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "建立成功"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 4
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "電機工程學系"
+                                                },
+                                                "college_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/departments/{id}": {
+            "put": {
+                "tags": [
+                    "Department"
+                ],
+                "summary": "更新系所資料",
+                "operationId": "adminUpdateDepartment",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 3
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "資訊工程學系"
+                                    },
+                                    "college_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "更新成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "更新成功"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Department"
+                ],
+                "summary": "刪除系所資料",
+                "operationId": "adminDeleteDepartment",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 3
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "刪除成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "刪除成功"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/selections": {
+            "get": {
+                "tags": [
+                    "Selection"
+                ],
+                "summary": "查詢選課紀錄",
+                "operationId": "adminGetSelections",
+                "parameters": [
+                    {
+                        "name": "student_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "course_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Selection"
+                ],
+                "summary": "新增選課",
+                "operationId": "adminCreateSelection",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "student_id",
+                                    "course_id"
+                                ],
+                                "properties": {
+                                    "student_id": {
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "course_id": {
+                                        "type": "integer",
+                                        "example": 10
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "成功"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/semesters": {
+            "get": {
+                "tags": [
+                    "Semester"
+                ],
+                "summary": "查詢學期",
+                "operationId": "adminGetSemesters",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "操作成功"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "115-1"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "115學年度 第1學期"
+                                                    },
+                                                    "start_date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2025-08-01"
+                                                    },
+                                                    "end_date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2026-01-15"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-01T08:00:00Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-01T08:00:00Z"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Semester"
+                ],
+                "summary": "新增學期",
+                "operationId": "adminCreateSemester",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code",
+                                    "name",
+                                    "start_date",
+                                    "end_date"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "example": "115-2"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "115學年度 第2學期"
+                                    },
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2026-02-10"
+                                    },
+                                    "end_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2026-07-01"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "成功"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/time_codes": {
+            "get": {
+                "tags": [
+                    "Semester"
+                ],
+                "summary": "查詢節次時間代碼",
+                "operationId": "adminGetTimeCodes",
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "操作成功"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "1"
+                                                    },
+                                                    "time": {
+                                                        "type": "string",
+                                                        "example": "0830"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Semester"
+                ],
+                "summary": "新增節次時間代碼",
+                "operationId": "adminCreateTimeCode",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code",
+                                    "time"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "example": "2"
+                                    },
+                                    "time": {
+                                        "type": "string",
+                                        "example": "0930"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "成功"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/teachers": {
+            "get": {
+                "tags": [
+                    "Teacher"
+                ],
+                "summary": "取得教師列表",
+                "description": "取得教師資料",
+                "operationId": "adminGetTeachers",
+                "parameters": [
+                    {
+                        "name": "sorting",
+                        "in": "query",
+                        "description": "排序欄位(預設id)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "id"
+                        }
+                    },
+                    {
+                        "name": "direction",
+                        "in": "query",
+                        "description": "排序方向(預設desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "example": "desc"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "頁碼(預設1)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "筆數(預設15)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "15"
+                        }
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "關鍵字搜尋",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "操作成功"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 11
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "林小明"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "teacher@example.com"
+                                                    },
+                                                    "department_id": {
+                                                        "type": "integer",
+                                                        "example": 3
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "副教授"
+                                                    },
+                                                    "office": {
+                                                        "type": "string",
+                                                        "example": "B202"
+                                                    },
+                                                    "phone_ext": {
+                                                        "type": "string",
+                                                        "example": "7788"
+                                                    },
+                                                    "expertise": {
+                                                        "type": "string",
+                                                        "example": "資料探勘、演算法"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "meta": {
+                                            "$ref": "#/components/schemas/Meta"
+                                        },
+                                        "links": {
+                                            "$ref": "#/components/schemas/Links"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Teacher"
+                ],
+                "summary": "新增教師資料",
+                "operationId": "adminCreateTeacher",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "department_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "林小明"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "teacher@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "Password123"
+                                    },
+                                    "department_id": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "教授"
+                                    },
+                                    "office": {
+                                        "type": "string",
+                                        "example": "B202"
+                                    },
+                                    "phone_ext": {
+                                        "type": "string",
+                                        "example": "7788"
+                                    },
+                                    "expertise": {
+                                        "type": "string",
+                                        "example": "演算法設計、AI 應用"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 201
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "建立成功"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 12
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "林小明"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "teacher@example.com"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/teachers/{id}": {
+            "put": {
+                "tags": [
+                    "Teacher"
+                ],
+                "summary": "更新教師資料",
+                "operationId": "adminUpdateTeacher",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 12
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "林小明"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "teacher@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "NewPassword!456"
+                                    },
+                                    "department_id": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "講師"
+                                    },
+                                    "office": {
+                                        "type": "string",
+                                        "example": "C302"
+                                    },
+                                    "phone_ext": {
+                                        "type": "string",
+                                        "example": "1234"
+                                    },
+                                    "expertise": {
+                                        "type": "string",
+                                        "example": "多媒體設計、教育科技"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "更新成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "更新成功"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Teacher"
+                ],
+                "summary": "刪除教師資料",
+                "operationId": "adminDeleteTeacher",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 12
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "刪除成功",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "刪除成功"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -263,6 +1952,38 @@
                         "description": "名稱",
                         "type": "string",
                         "example": "name"
+                    }
+                },
+                "type": "object"
+            },
+            "Classroom": {
+                "title": "Classroom",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "H403"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "電資大樓 H403"
+                    },
+                    "location": {
+                        "type": "string",
+                        "example": "電資大樓 4 樓"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-07-01T10:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-07-10T12:30:00Z"
                     }
                 },
                 "type": "object"
@@ -405,6 +2126,30 @@
         {
             "name": "Auth",
             "description": "後台登入"
+        },
+        {
+            "name": "Classroom",
+            "description": "教室資料管理"
+        },
+        {
+            "name": "Course",
+            "description": "課程管理"
+        },
+        {
+            "name": "Department",
+            "description": "系所資料管理"
+        },
+        {
+            "name": "Selection",
+            "description": "學生選課查詢／管理"
+        },
+        {
+            "name": "Semester",
+            "description": "學期與時間代碼設定"
+        },
+        {
+            "name": "Teacher",
+            "description": "教師資料管理"
         }
     ]
 }

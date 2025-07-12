@@ -746,6 +746,152 @@
                 ]
             }
         },
+        "/student/courses": {
+            "get": {
+                "tags": [
+                    "Student"
+                ],
+                "summary": "取得目前已選課程列表",
+                "description": "取得目前已選課程列表",
+                "operationId": "getStudentCourses",
+                "parameters": [
+                    {
+                        "name": "sorting",
+                        "in": "query",
+                        "description": "排序欄位(預設id)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "id"
+                        }
+                    },
+                    {
+                        "name": "direction",
+                        "in": "query",
+                        "description": "排序方向(預設desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "example": "desc"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "頁碼(預設1)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "筆數(預設15)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "15"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "code": {
+                                            "description": "狀態代碼",
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "description": "結果描述",
+                                            "type": "string",
+                                            "example": "操作成功"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "課程ID",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "description": "課程名稱",
+                                                        "type": "string",
+                                                        "example": "課程名稱"
+                                                    },
+                                                    "description": {
+                                                        "description": "課程描述",
+                                                        "type": "string",
+                                                        "example": "課程描述"
+                                                    },
+                                                    "is_required": {
+                                                        "description": "是否必修",
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "teach_id": {
+                                                        "description": "授課教師ID",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "max_students": {
+                                                        "description": "人數上限",
+                                                        "type": "integer",
+                                                        "example": 30
+                                                    },
+                                                    "now_students": {
+                                                        "description": "目前人數",
+                                                        "type": "integer",
+                                                        "example": 25
+                                                    },
+                                                    "created_at": {
+                                                        "description": "建立時間",
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2021-07-07 12:00:00"
+                                                    },
+                                                    "updated_at": {
+                                                        "description": "更新時間",
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2021-07-07 12:00:00"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/401"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
         "/student/courses/select": {
             "post": {
                 "tags": [
@@ -1394,6 +1540,38 @@
                     }
                 },
                 "type": "object"
+            },
+            "Classroom": {
+                "title": "Classroom",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "code": {
+                        "type": "string",
+                        "example": "H403"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "電資大樓 H403"
+                    },
+                    "location": {
+                        "type": "string",
+                        "example": "電資大樓 4 樓"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-07-01T10:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-07-10T12:30:00Z"
+                    }
+                },
+                "type": "object"
             }
         },
         "responses": {
@@ -1531,6 +1709,10 @@
     },
     "tags": [
         {
+            "name": "Course",
+            "description": "課程"
+        },
+        {
             "name": "Option",
             "description": "下拉選單相關 API"
         },
@@ -1545,10 +1727,6 @@
         {
             "name": "Auth",
             "description": "Auth"
-        },
-        {
-            "name": "Course",
-            "description": "Course"
         },
         {
             "name": "Upload",

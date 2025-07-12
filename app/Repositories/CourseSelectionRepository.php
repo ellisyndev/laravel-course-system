@@ -2,9 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Course;
 use App\Models\CourseSelection;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class CourseSelectionRepository extends BaseRepository
 {
@@ -26,5 +24,22 @@ class CourseSelectionRepository extends BaseRepository
         }
 
         return $query->first();
+    }
+
+    public function countEnrolledByCourseId(int $courseId): int
+    {
+        return $this->model->newQuery()
+            ->where('course_id', $courseId)
+            ->where('status', 'enrolled')
+            ->count();
+    }
+
+    public function getCourseSelectionsByStudentId(int $studentId): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->model->newQuery()
+            ->where('student_id', $studentId)
+            ->with(['course', 'course.teacher'])
+            ->where('status', 'enrolled')
+            ->get();
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Services\Api;
 
-use App\Models\Course;
 use App\Models\CourseSelection;
 use App\Repositories\CourseRepository;
 use App\Repositories\CourseSelectionRepository;
@@ -18,19 +17,16 @@ class CourseSelectionService
 
     /**
      * 加選課程
-     * @param  int  $studentId
-     * @param  int  $courseId
-     * @return CourseSelection
      */
     public function enroll(int $studentId, int $courseId): CourseSelection
     {
         return DB::transaction(function () use ($studentId, $courseId) {
             // 確認課程存在
-            $course = $this->courseRepository->find($courseId);
+            $course = $this->courseRepository->findWithLock($courseId);
 
             if (! $course) {
                 throw ValidationException::withMessages([
-                    'course_id' => ['課程不存在']
+                    'course_id' => ['課程不存在'],
                 ]);
             }
 
@@ -42,14 +38,23 @@ class CourseSelectionService
 
             if ($selection->status === 'enrolled') {
                 throw ValidationException::withMessages([
-                    'course_id' => ['已加選此課程，無需重複加選']
+                    'course_id' => ['已加選此課程，無需重複加選'],
                 ]);
             }
 
             // 衝堂判斷
             if ($this->hasScheduleConflict($studentId, $course)) {
                 throw ValidationException::withMessages([
-                    'course_id' => ['課程時間與已加選課程衝突']
+                    'course_id' => ['課程時間與已加選課程衝突'],
+                ]);
+            }
+
+            // 計算目前加選人數
+            $currentCount = $this->courseSelectionRepository->countEnrolledByCourseId($courseId);
+
+            if ($currentCount >= $course->max_students) {
+                throw ValidationException::withMessages([
+                    'course_id' => ['課程人數已滿'],
                 ]);
             }
 
@@ -66,9 +71,6 @@ class CourseSelectionService
 
     /**
      * 退選課程
-     * @param  int  $studentId
-     * @param  int  $courseId
-     * @return CourseSelection
      */
     public function withdraw(int $studentId, int $courseId): CourseSelection
     {
@@ -77,13 +79,13 @@ class CourseSelectionService
 
             if (! $selection) {
                 throw ValidationException::withMessages([
-                    'course_id' => ['尚未加選此課程或已退選']
+                    'course_id' => ['尚未加選此課程或已退選'],
                 ]);
             }
 
             if ($selection->status !== 'enrolled') {
                 throw ValidationException::withMessages([
-                    'course_id' => ['不可退選未加選的課程']
+                    'course_id' => ['不可退選未加選的課程'],
                 ]);
             }
 
@@ -119,5 +121,10 @@ class CourseSelectionService
         }
 
         return false;
+    }
+
+    public function getCourseSelectionsByStudentId(int $studentId): \Illuminate\Database\Eloquent\Collection
+    {
+        return $this->courseSelectionRepository->getCourseSelectionsByStudentId($studentId);
     }
 }

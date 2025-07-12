@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Enums\AdvancedApiResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentCourse\SelectCourseRequest;
+use App\Http\Resources\StudentCourse\CourseSelectionResource;
 use App\Http\Resources\StudentCourse\SelectCourseResource;
-use App\Models\CourseSelection;
 use App\Services\Api\CourseSelectionService;
 use App\Services\Api\CourseService;
 use Illuminate\Http\JsonResponse;
@@ -22,14 +22,20 @@ class StudentCourseController extends Controller
     ) {}
 
     /**
-     * 可選課程列表
-     */
-    public function availableCourses(Request $request) {}
-
-    /**
      * 已選課程列表
      */
-    public function selectedCourses(Request $request) {}
+    public function index(Request $request): JsonResponse
+    {
+        $studentId = $request->user()->id;
+
+        $selections = $this->courseSelectionService->getCourseSelectionsByStudentId($studentId);
+
+        return $this->respondSuccess(
+            SelectCourseResource::collection($selections->load('course'))->map->withDetail(),
+            '已選課程列表取得成功'
+        );
+    }
+
     public function select(SelectCourseRequest $request): JsonResponse
     {
         $student = $request->user();

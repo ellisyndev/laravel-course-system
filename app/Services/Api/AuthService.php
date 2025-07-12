@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
-
     public string $verifiedRedirectTo;
 
     public function __construct(

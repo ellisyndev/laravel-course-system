@@ -35,12 +35,11 @@ Route::middleware(['auth:sanctum', 'api.token'])->group(function () {
 
     // 學生專區
     Route::middleware(['role:student'])->prefix('student')->group(function () {
-        // 可選課程列表
-        Route::get('courses/available', [StudentCourseController::class, 'availableCourses']);
-        // 已選課程列表
-        Route::get('courses/selected', [StudentCourseController::class, 'selectedCourses']);
-        // 選課
-        Route::post('courses/select', [StudentCourseController::class, 'select']);
-        Route::post('courses/cancel', [StudentCourseController::class, 'cancel']);
+        Route::prefix('courses')->group(function () {
+            Route::get('/', [StudentCourseController::class, 'index']);
+            // 選課
+            Route::post('select', [StudentCourseController::class, 'select']);
+            Route::post('cancel', [StudentCourseController::class, 'cancel']);
+        });
     });
 });

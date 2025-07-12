@@ -91,4 +91,16 @@ class CourseRepository extends BaseRepository
             $page
         );
     }
+
+    /**
+     * 取得並鎖定指定課程（避免同時加選）
+     */
+    public function findWithLock(int $courseId): ?Course
+    {
+        return $this->model
+            ->newQuery()
+            ->where('id', $courseId)
+            ->lockForUpdate()
+            ->first();
+    }
 }

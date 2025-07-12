@@ -144,4 +144,22 @@ class Swagger
     {
         //
     }
+
+    /**
+     * @OA\Schema(
+     *     schema="Classroom",
+     *     type="object",
+     *     title="Classroom",
+     *     @OA\Property(property="id", type="integer", example=1),
+     *     @OA\Property(property="code", type="string", example="H403"),
+     *     @OA\Property(property="name", type="string", example="電資大樓 H403"),
+     *     @OA\Property(property="location", type="string", example="電資大樓 4 樓"),
+     *     @OA\Property(property="created_at", type="string", format="date-time", example="2025-07-01T10:00:00Z"),
+     *     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-07-10T12:30:00Z")
+     * )
+     */
+    public function classroomSchema()
+    {
+        //
+    }
 }

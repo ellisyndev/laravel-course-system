@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CourseSelectionStatus;
 use Illuminate\Database\Eloquent\Model;
 
 class CourseSelection extends Model
@@ -19,6 +20,7 @@ class CourseSelection extends Model
     ];
 
     protected $casts = [
+        'status' => CourseSelectionStatus::class,
         'enrolled_at' => 'datetime',
         'withdrawn_at' => 'datetime',
         'created_at' => 'datetime',
