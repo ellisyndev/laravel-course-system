@@ -20,4 +20,27 @@ class UserRepository extends BaseRepository
     {
         return $this->model->where('role', 'teacher')->get();
     }
+
+    public function getUsersWithPagination(array $filters = []): \Illuminate\Pagination\LengthAwarePaginator
+    {
+        $query = $this->model->newQuery()->with(['studentProfile', 'teacherProfile']);
+
+        if (isset($filters['role'])) {
+            $query->where('role', $filters['role']);
+        }
+
+        if (isset($filters['q'])) {
+            $query->where(function ($q) use ($filters) {
+                $q->where('name', 'like', '%'.$filters['q'].'%')
+                    ->orWhere('email', 'like', '%'.$filters['q'].'%');
+            });
+        }
+
+        return $query->paginate(10);
+    }
+
+    public function getUserById(int $id): ?User
+    {
+        return $this->model->with(['studentProfile', 'teacherProfile'])->find($id);
+    }
 }

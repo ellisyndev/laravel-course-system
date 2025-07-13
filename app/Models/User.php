@@ -50,4 +50,14 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    public function studentProfile(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(StudentProfile::class, 'user_id');
+    }
+
+    public function teacherProfile(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(TeacherProfile::class, 'user_id');
+    }
 }

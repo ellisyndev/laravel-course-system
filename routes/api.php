@@ -16,7 +16,7 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth:sanctum', 'api.token'])->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
-    Route::get('courses', [CourseController::class, 'index']);
+    Route::resource('courses', CourseController::class)->only(['index', 'show']);
     Route::prefix('options')->group(function () {
         Route::get('colleges_departments', [OptionController::class, 'collegesWithDepartments']);
         Route::get('colleges', [OptionController::class, 'colleges']);
@@ -30,7 +30,9 @@ Route::middleware(['auth:sanctum', 'api.token'])->group(function () {
     // 教師專區
     Route::middleware(['role:teacher'])->prefix('teacher')->group(function () {
         // 課程
-        Route::resource('courses', TeacherCourseController::class)->only(['store', 'update']);
+        Route::resource('courses', TeacherCourseController::class)->only(['index', 'update']);
+        // 取得課程學生列表
+        Route::get('courses/{id}/students', [TeacherCourseController::class, 'getStudents']);
     });
 
     // 學生專區

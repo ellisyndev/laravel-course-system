@@ -5,7 +5,7 @@ namespace App\Swagger\Admin;
 /**
  * @OA\Tag(
  *     name="Semester",
- *     description="學期與時間代碼設定"
+ *     description="學期時間設定"
  * )
  */
 class SemesterController
@@ -17,10 +17,13 @@ class SemesterController
      *     summary="查詢學期",
      *     operationId="adminGetSemesters",
      *     security={{"bearerToken":{}}},
+     *
      *     @OA\Response(
      *         response=200,
      *         description="成功",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="code", type="integer", example=200),
      *             @OA\Property(property="message", type="string", example="操作成功"),
      *             @OA\Property(property="data", type="array", @OA\Items(
@@ -45,61 +48,128 @@ class SemesterController
      *     summary="新增學期",
      *     operationId="adminCreateSemester",
      *     security={{"bearerToken":{}}},
-     *     @OA\RequestBody(required=true, @OA\JsonContent(
+     *
+     *     @OA\RequestBody(required=true,
+     *
+     *      @OA\JsonContent(
      *         required={"code", "name", "start_date", "end_date"},
+     *
      *         @OA\Property(property="code", type="string", example="115-2"),
      *         @OA\Property(property="name", type="string", example="115學年度 第2學期"),
      *         @OA\Property(property="start_date", type="string", format="date", example="2026-02-10"),
-     *         @OA\Property(property="end_date", type="string", format="date", example="2026-07-01")
+     *         @OA\Property(property="end_date", type="string", format="date", example="2026-07-01"),
+     *          @OA\Property(property="year", type="integer", example=2025),
+     *          @OA\Property(property="course_selection_start", type="string", format="string", example="2025-08-25 12:00:00"),
+     *          @OA\Property(property="course_selection_end", type="string", format="string", example="2025-09-05 12:00:00")
      *     )),
-     *     @OA\Response(response=201, description="成功")
+     *
+     *     @OA\Response(
+     * response=200,
+     * description="成功",
+     *
+     * @OA\JsonContent(
+     *
+     * @OA\Property(property="code", type="integer", example=200),
+     * @OA\Property(property="message", type="string", example="新增學期成功"),
+     * @OA\Property(property="data", type="object",
+     * @OA\Property(property="id", type="integer", example=5),
+     * @OA\Property(property="code", type="string", example="115-2"),
+     * @OA\Property(property="name", type="string", example="115學年度 第2學期"),
+     * @OA\Property(property="start_date", type="string", format="date"),
+     * @OA\Property(property="end_date", type="string", format="date"),
+     * @OA\Property(property="year", type="string", example="2025"),
+     * @OA\Property(property="course_selection_start", type="string", format="date-time"),
+     * @OA\Property(property="course_selection_end", type="string", format="date-time")
+     * )
+     * )
+     * )
      * )
      */
     public function storeSemester() {}
 
     /**
-     * @OA\Get(
-     *     path="/time_codes",
+     * @OA\Put(
+     *     path="/semesters/{id}",
      *     tags={"Semester"},
-     *     summary="查詢節次時間代碼",
-     *     operationId="adminGetTimeCodes",
+     *     summary="更新學期",
+     *     operationId="adminUpdateSemester",
      *     security={{"bearerToken":{}}},
+     *
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *
+     *         @OA\Schema(type="integer", example=1)
+     *     ),
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *
+     *         @OA\JsonContent(
+     *             required={"code", "name", "start_date", "end_date"},
+     *
+     *             @OA\Property(property="code", type="string", example="115-2"),
+     *             @OA\Property(property="name", type="string", example="115學年度 第2學期"),
+     *             @OA\Property(property="start_date", type="string", format="date", example="2026-02-10"),
+     *             @OA\Property(property="end_date", type="string", format="date", example="2026-07-01"),
+     *             @OA\Property(property="year", type="integer", example=2025),
+     *             @OA\Property(property="course_selection_start", type="string", format="date-time", example="2025-08-25 12:00:00"),
+     *             @OA\Property(property="course_selection_end", type="string", format="date-time", example="2025-09-05 12:00:00")
+     *         )
+     *     ),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="成功",
+     *
      *         @OA\JsonContent(
+     *
      *             @OA\Property(property="code", type="integer", example=200),
-     *             @OA\Property(property="message", type="string", example="操作成功"),
-     *             @OA\Property(property="data", type="array", @OA\Items(
-     *                 @OA\Property(property="id", type="integer", example=1),
-     *                 @OA\Property(property="code", type="string", example="1"),
-     *                 @OA\Property(property="time", type="string", example="0830"),
-     *                 @OA\Property(property="created_at", type="string", format="date-time"),
-     *                 @OA\Property(property="updated_at", type="string", format="date-time")
-     *             ))
+     *             @OA\Property(property="message", type="string", example="更新學期成功"),
+     *             @OA\Property(property="data", type="object",
+     *                 @OA\Property(property="id", type="integer", example=5),
+     *                 @OA\Property(property="code", type="string", example="115-2"),
+     *                 @OA\Property(property="name", type="string", example="115學年度 第2學期"),
+     *                 @OA\Property(property="start_date", type="string", format="date"),
+     *                 @OA\Property(property="end_date", type="string", format="date"),
+     *                 @OA\Property(property="year", type="integer", example=2025),
+     *                 @OA\Property(property="course_selection_start", type="string", format="date-time"),
+     *                 @OA\Property(property="course_selection_end", type="string", format="date-time")
+     *             )
      *         )
      *     )
      * )
      */
-    public function getTimeCodes() {}
+    public function updateSemester() {}
 
     /**
-     * @OA\Post(
-     *     path="/time_codes",
+     * @OA\Delete(
+     *     path="/semesters/{id}",
      *     tags={"Semester"},
-     *     summary="新增節次時間代碼",
-     *     operationId="adminCreateTimeCode",
+     *     summary="刪除學期",
+     *     operationId="adminDeleteSemester",
      *     security={{"bearerToken":{}}},
-     *     @OA\RequestBody(
+     *
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
      *         required=true,
-     *         @OA\JsonContent(
-     *             required={"code", "time"},
-     *             @OA\Property(property="code", type="string", example="2"),
-     *             @OA\Property(property="time", type="string", example="0930")
-     *         )
+     *
+     *         @OA\Schema(type="integer", example=1)
      *     ),
-     *     @OA\Response(response=201, description="成功")
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="成功",
+     *
+     *         @OA\JsonContent(
+     *
+     *             @OA\Property(property="code", type="integer", example=200),
+     *             @OA\Property(property="message", type="string", example="刪除學期成功")
+     *         )
+     *      )
      * )
      */
-    public function storeTimeCode() {}
+    public function destroySemester() {}
 }

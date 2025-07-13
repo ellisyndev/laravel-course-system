@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\AdvancedApiResponseTrait;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StudentCourse\SelectCourseRequest;
-use App\Http\Resources\StudentCourse\CourseSelectionResource;
-use App\Http\Resources\StudentCourse\SelectCourseResource;
+use App\Http\Requests\Api\StudentCourse\SelectCourseRequest;
+use App\Http\Resources\Api\StudentCourse\SelectCourseResource;
 use App\Services\Api\CourseSelectionService;
 use App\Services\Api\CourseService;
 use Illuminate\Http\JsonResponse;
@@ -42,7 +41,7 @@ class StudentCourseController extends Controller
         $courseId = $request->input('course_id');
 
         try {
-            $course = $this->courseService->getCourseById($courseId);
+            $course = $this->courseService->getCourseById($student->id, $courseId);
             $select = $this->courseSelectionService->enroll($student->id, $courseId);
 
             return $this->respondSuccess(
@@ -64,7 +63,7 @@ class StudentCourseController extends Controller
         $courseId = $request->input('course_id');
 
         try {
-            $course = $this->courseService->getCourseById($courseId);
+            $course = $this->courseService->getCourseById($student->id, $courseId);
             $cancel = $this->courseSelectionService->withdraw($student->id, $courseId);
 
             return $this->respondSuccess(

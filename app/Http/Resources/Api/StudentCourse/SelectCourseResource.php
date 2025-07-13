@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Resources\StudentCourse;
+namespace App\Http\Resources\Api\StudentCourse;
 
-use App\Enums\CourseSelectionStatus;
-use App\Http\Resources\Course\CourseResource;
+use App\Http\Resources\Api\Course\CourseResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -31,7 +30,7 @@ class SelectCourseResource extends JsonResource
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
         ], $this->detailed ? [
-            'course'       => new CourseResource($this->whenLoaded('course')),
+            'course' => new CourseResource($this->whenLoaded('course')),
         ] : []);
     }
 }

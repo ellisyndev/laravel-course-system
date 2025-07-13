@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
                 'user_id' => $user->id,
                 'college_id' => $colleges ? $colleges[array_rand($colleges)] : null,
                 'department_id' => $departments ? $departments[array_rand($departments)] : null,
-                'entry_year' => now()->year - rand(0, 3), // 模擬大一～大四
+                'grade' => rand(1, 4), // 模擬大一～大四
                 'education_level' => 'bachelor',
                 'program_type' => ['day', 'night', 'inservice'][rand(0, 2)],
             ]);

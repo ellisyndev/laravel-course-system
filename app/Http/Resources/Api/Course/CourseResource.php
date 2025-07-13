@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources\Course;
+namespace App\Http\Resources\Api\Course;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -34,9 +34,9 @@ class CourseResource extends JsonResource
             // 課程時間
             'semester_code' => $this->semester_code,
             'start_time_code' => $this->start_time_code,
-            'start_time' => optional($this->startTime)->start_time . '~' . optional($this->startTime)->end_time,
+            'start_time' => optional($this->startTime)->start_time.'~'.optional($this->startTime)->end_time,
             'end_time_code' => $this->end_time_code,
-            'end_time' => optional($this->endTime)->start_time . '~' . optional($this->endTime)->end_time,
+            'end_time' => optional($this->endTime)->start_time.'~'.optional($this->endTime)->end_time,
 
             // 單位
             'college_code' => $this->college?->code,

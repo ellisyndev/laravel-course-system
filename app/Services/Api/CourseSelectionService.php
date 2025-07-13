@@ -2,6 +2,7 @@
 
 namespace App\Services\Api;
 
+use App\Enums\CourseSelectionStatus;
 use App\Models\CourseSelection;
 use App\Repositories\CourseRepository;
 use App\Repositories\CourseSelectionRepository;
@@ -83,7 +84,7 @@ class CourseSelectionService
                 ]);
             }
 
-            if ($selection->status !== 'enrolled') {
+            if ($selection->status !== CourseSelectionStatus::Enrolled) {
                 throw ValidationException::withMessages([
                     'course_id' => ['不可退選未加選的課程'],
                 ]);

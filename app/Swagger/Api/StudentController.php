@@ -53,10 +53,10 @@ class StudentController
      *
      *                @OA\Property( property="code", type="integer", description="狀態代碼", example=200),
      *                @OA\Property( property="message", type="string", description="結果描述", example="操作成功"),
-     *
-      *@OA\Property(property="data",
+     *@OA\Property(property="data",
       type = "array",
      *            @OA\Items(type="object",
+     *
      *           @OA\Property(property="id", type="integer", example=1, description="課程ID"),
      *       @OA\Property(property="name", type="string", example="課程名稱", description="課程名稱"),
      *     @OA\Property(property="description", type="string", example="課程描述", description="課程描述"),
@@ -75,10 +75,8 @@ class StudentController
       @OA\Response(response = "401", ref = "#/components/responses/401"),
       @OA\Response(response = "422", ref = "#/components/responses/422"),
       )
-      */
-    public function index()
-    {
-    }
+     */
+    public function index() {}
 
     /**
      * @OA\Post(

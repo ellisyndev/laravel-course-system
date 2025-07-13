@@ -13,12 +13,7 @@ class AuthController extends Controller
 {
     use AdvancedApiResponseTrait;
 
-    private AuthService $userAuthService;
-
-    public function __construct(AuthService $authService)
-    {
-        $this->authService = $authService;
-    }
+    public function __construct(protected AuthService $authService) {}
 
     /**
      * 登入

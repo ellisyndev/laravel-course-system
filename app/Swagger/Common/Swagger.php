@@ -150,6 +150,7 @@ class Swagger
      *     schema="Classroom",
      *     type="object",
      *     title="Classroom",
+     *
      *     @OA\Property(property="id", type="integer", example=1),
      *     @OA\Property(property="code", type="string", example="H403"),
      *     @OA\Property(property="name", type="string", example="電資大樓 H403"),
@@ -159,6 +160,67 @@ class Swagger
      * )
      */
     public function classroomSchema()
+    {
+        //
+    }
+
+    /**
+     * @OA\Schema(
+     *     schema="User",
+     *     type="object",
+     *     title="User",
+     *     description="學生或教師的基本資料",
+     *
+     *     @OA\Property(property="id", type="integer", example=1, description="使用者 ID"),
+     *     @OA\Property(property="name", type="string", example="王小明", description="姓名"),
+     *     @OA\Property(property="email", type="string", example="student@example.com", description="電子郵件"),
+     *     @OA\Property(property="role", type="string", enum={"student", "teacher"}, example="student", description="角色"),
+     *     @OA\Property(property="created_at", type="string", format="date-time", example="2025-07-01T10:00:00Z", description="建立時間"),
+     *     @OA\Property(
+     *         property="profile",
+     *         oneOf={
+     *
+     *             @OA\Schema(ref="#/components/schemas/StudentProfile"),
+     *             @OA\Schema(ref="#/components/schemas/TeacherProfile")
+     *         },
+     *         description="依照角色提供學生或教師的進階資料"
+     *     )
+     * )
+     */
+    public function userSchema()
+    {
+        //
+    }
+
+    /**
+     * @OA\Schema(
+     *     schema="StudentProfile",
+     *     type="object",
+     *     description="學生資料",
+     *
+     *     @OA\Property(property="college", type="string", example="電資學院"),
+     *     @OA\Property(property="department", type="string", example="資訊工程系"),
+     *     @OA\Property(property="entry_year", type="integer", example=2023),
+     *     @OA\Property(property="grade", type="integer", example=2)
+     * )
+     */
+    public function studentProfileSchema()
+    {
+        //
+    }
+
+    /**
+     * @OA\Schema(
+     *     schema="TeacherProfile",
+     *     type="object",
+     *     description="教師資料",
+     *
+     *     @OA\Property(property="college", type="string", example="理學院"),
+     *     @OA\Property(property="department", type="string", example="應用數學系"),
+     *     @OA\Property(property="title", type="string", example="助理教授")
+     * )
+     */
+    public function teacherProfileSchema()
     {
         //
     }

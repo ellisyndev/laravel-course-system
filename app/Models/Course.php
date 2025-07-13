@@ -106,6 +106,11 @@ class Course extends Model
             ->withTimestamps();
     }
 
+    public function selections(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CourseSelection::class, 'course_id');
+    }
+
     public function startTime(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(TimeCode::class, 'start_time_code', 'code');

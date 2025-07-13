@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests\TeacherCourse;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateCourseRequest extends FormRequest
 {
@@ -44,6 +45,10 @@ class CreateCourseRequest extends FormRequest
             'department_id' => [
                 'required',
                 'exists:departments,id',
+            ],
+            'teacher_id' => [
+                'nullable',
+                Rule::exists('users', 'id')->where('role', 'teacher'),
             ],
             'level_code' => [
                 'required',

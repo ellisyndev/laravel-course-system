@@ -35,9 +35,10 @@ class AuthController
      *
      *         @OA\JsonContent(
      *
-     *             @OA\Property(property="token", type="string", example="eyJ0eXAiOiJKV1QiLCJh..."),
      *             @OA\Property(property="token_type", type="string", example="Bearer"),
-     *             @OA\Property(property="expires_in", type="integer", example=3600)
+     *             @OA\Property(property="token", type="string", example="2|8RY3zX5gFPUp1RFHQRHIyGdSuvObG8IEaOtE1LKhd6b7305c"),
+     *             @OA\Property(property="user_id", type="integer", example=1),
+     *              @OA\Property(property="role", type="string", example="admin"),
      *         )
      *     ),
      *
